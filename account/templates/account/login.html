@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head lang="en">
@@ -33,7 +35,7 @@
                      <!-- Remove this block on the server -->
      <style>
         .auth-bg {
-            background: url(dist/auth.jpg),hsl(0deg 0% 96%) no-repeat;
+            background: url('{% static "dist/auth.jpg" %}' ),hsl(0deg 0% 96%) no-repeat;
             background-size: cover;
         }
     </style> 
@@ -43,7 +45,8 @@
 <div class="container-fluid auth-bg">
     <div class="row">
         <div class="col-lg-15 p-0 justify-content-center d-flex">
-            <form class="min-vh-100 w-75 p-0 d-flex flex-column justify-content-center">
+            <form class="min-vh-100 w-75 p-0 d-flex flex-column justify-content-center" action="{% url 'login' %}" method="POST">  
+                {% csrf_token %}
                 <div><a class="navbar-brand text-left" href="index.html">
                     <span class="sr-only">AgroServe</span>
                     <img src=" {%    static 'assets/logo/VatAgro-2.png' %}" class=""
@@ -52,16 +55,14 @@
                     <h3 class="font-weight-bold my-3">Log in to your account</h3>
                     <div class="form-group">
                         
-                        <input type="" class="form-control bg-white border-0 " id="email" value="" placeholder="Email Address"/>
-                    </div>
+{{ form|crispy }}                    </div>
                     <div class="form-group">
                         
-                    <input type="password" class="form-control bg-white border-0 " id="password" value="" placeholder="Password"/>
                         <a class="text-right d-block" href="forgot-password.html">Forgot Password?</a>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Login</button>
-                        <a class="d-block" href="register.html">Join Here</a>
+                        <a class="d-block" href="{% url 'register' %}">Join Here</a>
                     </div>
                 </div>
             </form>
