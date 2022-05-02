@@ -1,16 +1,44 @@
-from django.shortcuts import redirect, render
-from django.contrib.auth import login,authenticate
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.views  import LoginView
 from account.forms import SignUpForm
 from django.views.generic import TemplateView,ListView,CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm #add this
 from django.contrib import messages
+from account.models import User
+from goods.models import Category
+from goods.models import Products
+from django.db.models import F
+
+def category(request,pk):
+    cat=Category.objects.all()
+    main_cat=Category.objects.filter(pk=pk)
+    cndd=get_object_or_404(Category,pk=pk)
+    r=cndd.id
+    
+    prod_cat=Products.objects.filter(product_catgeory=pk)
+
+    context={
+        "cat":cat,
+        'main':main_cat,
+        'prod_cat':prod_cat
+    }
+    return render(request,'account/catgeory.html',context)
 
 
 def home(request):
-    return render(request,'account/index.html')
+    prod_cat=Category.objects.all()
+    sellers=User.objects.filter(staff=True)
+    context={
+        'cat':prod_cat,
+        'seller':sellers
+    }
+    return render(request,'account/index.html',context)
 
+def logout_request(request):
+    logout(request)
+    return redirect('home')
 
 class MyLogin(LoginView):
     template_name='account/login.html'

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'farmer',
     'account',
    'crispy_forms',
+   'goods'
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -131,3 +132,4 @@ STATICFILES_DIRS=[
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL='home'
 LOGTIN_URL='login'
+LOGOUT_REDIRECT_URL='home'

@@ -50,22 +50,27 @@ class User(AbstractBaseUser):
     phone=models.CharField(max_length=20)
     address=models.CharField(max_length=500)
     staff = models.BooleanField(default=False) # a admin user; non super-user
-    admin = models.BooleanField(default=False) # a superuser
+    admin = models.BooleanField(default=False)
 
-    USERNAME_FIELD='email'
+    STATUS=(
+        ('CUSTOMER','Buyer'),
+        ('FARMER','Seller')
+    )
+    client_status=models.CharField(max_length=500,choices=STATUS)
     
+
+    USERNAME_FIELD='email'  
+
     def has_perm(self,perm,obj=None):
         return self.is_admin
 
 
     def __str__(self):
         return self.email
-
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
         return True
-
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
@@ -75,7 +80,6 @@ class User(AbstractBaseUser):
     def is_staff(self):
         "Is the user a member of staff?"
         return self.staff
-
     @property
     def is_admin(self):
         "Is the user a admin member?"

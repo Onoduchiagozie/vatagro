@@ -53,8 +53,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav">
+                    {% if request.user.is_staff %}
                     <li class="nav-item">
                         <a class="nav-link" href="">Products</a></li>
+                        {% endif %}
                     <li class="nav-item ">
                         <a class="nav-link " href="" >
                             Locations 
@@ -69,19 +71,34 @@
 
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item" >
-                        <a class="btn btn-outline-light mb-3 mb-lg-0 px-lg-4 ml-lg-4"
-                           role="button" aria-haspopup="true" aria-expanded="false"
-                           href="register.html">List your product</a>
-                    </li><li class="nav-item" >
 
+                    <li class="nav-item" >                        
+                                      {% if request.user.is_staff %}
+
+                        <a class="btn btn-outline-light mb-3 mb-lg-0 px-lg-4 ml-lg-4"
+                           role="button" aria-haspopup="true" aria-expanded="false"         
+
+                           href="register.html">List your product</a>                    {% endif %}
+
+                    </li>
+                        {% if request.user.is_authenticated %}
+                        <li class="nav-item" >
+                            <a class="btn mb-0 btn-light text-black-50 mb-3 mb-lg-0 px-lg-4 ml-lg-4"
+                                role="button" aria-haspopup="true" aria-expanded="false"
+                                href="{% url 'logout' %}">Logout</a>
+                         </li>
+                         {% else %}
+                    <li class="nav-item" >
                        <a class="btn mb-0 btn-light text-black-50 mb-3 mb-lg-0 px-lg-4 ml-lg-4"
                            role="button" aria-haspopup="true" aria-expanded="false"
-                           href="register.html">Register</a>
-                    </li><li class="nav-item" >
+                           href=" {% url 'register' %}">Register</a>
+                    </li>
+                    <li class="nav-item" >
                         <a class="btn mb-0 btn-light text-black-50 mb-3 mb-lg-0 px-lg-4 ml-lg-4"
                            role="button" aria-haspopup="true" aria-expanded="false"
-                           href="login.html">Sign In</a>
+                           href="{% url 'login' %}">Sign In</a>
+
+                           {% endif %}
 
                            <a href=" /carts/ " class="widget-header pl-3 ml-3">
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -95,11 +112,13 @@
         </div>
     </nav>
 </header>
+
+{% block content %}
     <div class="container-fluid p-0">
                 <div class="b-stage">
                     <div class="b-stage__1 w-100">
                         <div class="container flex-column justify-content-end d-flex pb-5 align-items-stretch" style="height: inherit">
-                            <h1 class="t-30 text-white mb-4 font-weight-bold">Find a product{{request.user}}                           </h1>
+                            <h1 class="t-30 text-white mb-4 font-weight-bold">Find a product                         </h1>
                             <form class="search form-row bg-green p-2 br-2 mb-lg-5">
                                 <div class="form-group col mb-2 mb-lg-0 px-1">
                                     
@@ -141,70 +160,104 @@
 
 
 
+    <section class="container pt-1 pb-4 mt-4">
+        <h3 class="section-h t-20 font-weight-bold">Browse by product type</h3>
+    
+        <div class="row">
+            <div class="summary owl-carousel owl-theme col-lg-30"
+                 data-carousel="true"
+                 data-mouse-drag="true"
+                 data-dots="true"
+                 data-loop="true"
+                 data-responsive='{"0": {"margin": 20, "items": 2},"600":{"margin": 20, "items": 3},"1000":{"items":5, "margin": 30}}'>
+                 {% for x in cat %}            
+                    <div class=''>
+                        <a href="{% url 'category' x.pk %}">
+                            <div class="">
+                                <img src="./nuts.jpeg"
+                                     height="768" width="1024"
+                                     alt="onion-Logo"
+                                     class="img-fluid w-100" />
+                                <h4 class="mb-0">{{ x.category_name }} </h4>
+                                <span>2 products</span>
+                            </div> 
+                        </a>
+                    </div>
+                    {% endfor %} 
+            </div>
+        </div>
+    </section>
+    
+
+    <section class="container pt-1 pb-4 mt-4">
+        <h3 class="section-h t-20 font-weight-bold">Top Seller</h3>
+    
+        <div class="row">
+            <div class="summary owl-carousel owl-theme col-lg-30"
+                 data-carousel="true"
+                 data-mouse-drag="true"
+                 data-dots="true"
+                 data-responsive='{"0": {"margin": 20, "items": 2},"600":{"margin": 20, "items": 3},"1000":{"items":5, "margin": 30}}'>
+                 {% for x in seller %}            
+    
+                    <div class=''>
+                        <a href="Home/Products/3E1txAafIUg%3d.html">
+                            <div class="">
+                                <img src='{% static "images/top_sellers/angie.jpg" %}'
+                                     height="768" width="1024"
+                                     alt="onion-Logo"
+                                     class="img-fluid w-100" />
+                                <h4 class="mb-0">{{ x.first_name }} </h4>
+                                <span>2 products</span>
+                            </div> 
+                        </a>
+                    </div>
+                    {% endfor %} 
+            </div>
+        </div>
+    </section>
+    
 
 
 
 
 
 
-<section class="container pt-1 pb-4 mt-4">
-        <!-- BROWSE BY PRODUCT CAROUSEL   -->
-    <h3 class="section-h t-20 font-weight-bold">Browse by product type</h3>  
-<div class="row">
-    <div class="summary owl-carousel owl-theme col-lg-30"
-         data-carousel="true"
-         data-mouse-drag="true"
-         data-dots="false"
-         data-responsive='{"0": {"margin": 20, "items": 2},"600":{"margin": 20, "items": 3},"1000":{"items":5, "margin": 30}}'>             
-         <div class=''>
-                <a href="">
-    <div class="">
-        <img
-                src='{% static "images/by_type/onion.jpg" %}'
-                alt="onion-Logo"
-                class="img-fluid w-100"
-        />
-        <h4 class="mb-0">Onions</h4>
-        <span>3,000 sellers</span>
-    </div>
-</a>
-            </div> </div>
-</div>
-</section>
-
-
-
+<!-- 
 <div class="container py-4 mt-1">
     <h3 class="section-h t-20 font-weight-bold">Top Sellers</h3>
 <div class="row">
     <div class="summary owl-carousel owl-theme col-lg-30"
          data-carousel="true"
          data-mouse-drag="true"
-         data-dots="false"
+         data-dots="true"
          data-responsive='{"0": {"margin": 20, "items": 2},"600":{"margin": 20, "items": 3},"1000":{"items":5, "margin": 30}}'>
+             {% for x in seller %}
+
                     <div class=''>
                 <a href="">
+
     <div class="">
         <img
-                src='{% static "images/top_sellers/angie.jpg" %}' 
+                src='' 
                 alt="dude-Logo"
                 class="img-fluid w-100"
         />
-        <h4 class="mb-0">Nasiru Ibu</h4>
+        <h4 class="mb-0">{{ x.first_name }}</h4>
         <span>3,000 sold</span>
     </div>
 </a>
-            </div>   
+            </div>  
+                 {% endfor %}
+
             </div>
 </div>
-</div>
+</div> -->
 
 
 
 <div class="container py-4 mt-1 mb-5">
     <h3 class="section-h t-20 font-weight-bold">Popular Locations</h3>
-    
-
 <div class="row justify-content-center">
             <div class='col-lg-10 col-md-10 col-30'>
             <a href="">
@@ -253,6 +306,7 @@
             </div>
         </div>
     </nav>
+{% endblock %}
 <footer class="footer py-3 bg-green-900" style="">
     <div class="footer-bottom text-white bg-gray-dark">
         <div class="container">
@@ -274,7 +328,12 @@
                             <ion-icon name="logo-linkedin" style="width: 1.5em;height: 1.5em"></ion-icon>
                         </a>
                     </section>
+
+                     <div class="">
+                    <a href="../../Account/Login1f7c.html?area=Admin" class="btn bg-vatagro-brown text-white ">Portal Login</a>
+                      </div>
                 </div>
+               
             </div>
         </div>
     </div>
