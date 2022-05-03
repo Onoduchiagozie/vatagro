@@ -125,11 +125,13 @@ STATIC_ROOT=BASE_DIR /'static'
 STATICFILES_DIRS=[
     'vatagro/static'
 ]
+MEDIA_URL='/media/'
+MEDIA_ROOT=BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL='home'
-LOGTIN_URL='login'
+LOGIN_URL='login'
 LOGOUT_REDIRECT_URL='home'

@@ -7,25 +7,31 @@ from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm #add this
 from django.contrib import messages
 from account.models import User
-from goods.models import Category
-from goods.models import Products
+from goods.models import Category, StoreLocation
+from goods.models import Product
 from django.db.models import F
 
 def category(request,pk):
     cat=Category.objects.all()
     main_cat=Category.objects.filter(pk=pk)
-    cndd=get_object_or_404(Category,pk=pk)
-    r=cndd.id
-    
-    prod_cat=Products.objects.filter(product_catgeory=pk)
+    product_category=Product.objects.filter(product_catgeory=pk)
 
     context={
         "cat":cat,
         'main':main_cat,
-        'prod_cat':prod_cat
+        'prod_cat':product_category
     }
     return render(request,'account/catgeory.html',context)
 
+
+def product_details(request,pk):
+    selected_product= get_object_or_404(Product,pk=pk) 
+    store=get_object_or_404(StoreLocation,pk=pk)
+    context={
+        "product":selected_product,
+        "store":store
+    }
+    return render(request,'account/product_details.html',context)
 
 def home(request):
     prod_cat=Category.objects.all()

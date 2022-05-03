@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="en" style="scroll-behavior: smooth;">
     <head lang="en">
-        <title>Welcome | AgroServe</title>
+        
+        <title> {% block title %} {% endblock %}  Welcome | AgroServe</title>
         <meta charset="utf-8">
         <meta name="theme-color" content="#ffffff">
         <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
@@ -35,6 +36,16 @@
         <link rel="apple-touch-icon" sizes="256x256" href="{% static 'build/vatagro/256x256.png' %} ">
 
         <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="AgroServe activity feed" />
+
+
+        <style>
+            input[type=number]::-webkit-inner-spin-button,
+            input[type=number]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        </style>
+
                                     </head>
     <body>
        
@@ -174,7 +185,7 @@
                     <div class=''>
                         <a href="{% url 'category' x.pk %}">
                             <div class="">
-                                <img src="./nuts.jpeg"
+                                <img src="{{ x.cat_image.url }}"
                                      height="768" width="1024"
                                      alt="onion-Logo"
                                      class="img-fluid w-100" />
@@ -345,5 +356,7 @@
         </span>
         <script aysnc src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
         <script async src="{% static 'dist/site.bundle.js' %}"></script>
+        <script src="{%  static 'jquery.js' %}"></script>
+
     </body>
 </html>
