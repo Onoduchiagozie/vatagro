@@ -1,6 +1,5 @@
 from django.db import models
 
-from account.models import User
 
 # noinspection PyCallingNonCallable
 class StoreLocation(models.Model):
@@ -59,11 +58,50 @@ class Merchant(models.Model):
 
 
 class ShippingAddress(models.Model):
-    state = models.CharField(max_length=10,)
+    states_list= (
+                    ("Abia", " Abia"),                      
+                    ( "Bauchi", "Bauchi",),
+                    ( "Bayelsa","Bayelsa",),
+                    ( "Benue", "Benue",),
+                    ( "Borno",  "Borno",     ),
+                  ("Cross River" ,"Cross River",),
+                  ("Delta",   "Delta",   ),
+                    ("Ebonyi",  "Ebonyi",  ),
+                    ("Edo",    "Edo",    ),
+                    ("Ekiti",  "Ekiti",  ),
+                    ("Enugu",  "Enugu",   ),
+                    ("FCT - Abuja","FCT - Abuja",),
+                  ("Gombe",  "Gombe",  ),
+                    ("Imo",    "Imo",    ),
+                    ("Jigawa", "Jigawa", ),
+                    ("Kaduna",  "Kaduna",  ),
+                    ("Kano",    "Kano",       ),
+                  ("Katsina","Katsina",),
+                    ("Kebbi",   "Kebbi",      ),
+                  ("Kogi",      "Kogi",    ),
+                    ("Kwara",   "Kwara",   ),
+                    ("Lagos",   "Lagos",   ),
+                    ("Nasarawa","Nasarawa",),
+                    ("Niger",   "Niger",      ),
+                  ("Ogun",      "Ogun",    ),
+                    ("ndo",     "ndo",     ),
+                    ("Osun",    "Osun",    ),
+                    ("Oyo",    "Oyo",    ),
+                    ("Plateau","Plateau",),
+                    ("Rivers",  "Rivers",  ),
+                    ("Sokoto",  "Sokoto", ),
+                    ("Taraba","Taraba",),
+                    ("Yobe",    "Yobe",),
+                  ("Zamfara","Zamfara")    ,
+)         
+    state = models.CharField(max_length=50,choices=states_list)
     city = models.CharField(max_length=20)
-    adress = models.CharField(max_length=50)
-    phone = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    address = models.CharField(max_length=50)
+    phone = models.CharField(max_length=20)
     is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+      return self.address
 
 # AFTER CART PURCHASE
 # class PurchasedProducts(models.Model):
@@ -88,15 +126,15 @@ class Product(models.Model):
     product_catgeory = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     store_location = models.ForeignKey(
     StoreLocation, on_delete=models.DO_NOTHING,blank=True)
-    # per=(
-    #   ('25 Litres','25 Litres'),
-    #   ('50 Litres','50 Litres'),
-    #   ('10 Litres','10 Litres'),
-    #   ('25kg Bag','25kg Bag'),
-    #   ('50kg Bag','50kg Bag'),
-    #         ('Basket','Basket'),
-    # )
-    # measurment = models.CharField(max_length=20,choices=per)
+    per=(
+      ('25 Litres','25 Litres'),
+      ('50 Litres','50 Litres'),
+      ('10 Litres','10 Litres'),
+      ('25kg Bag','25kg Bag'),
+      ('50kg Bag','50kg Bag'),
+            ('Basket','Basket'),
+    )
+    measurment = models.CharField(max_length=20,choices=per)
     product_description = models.CharField(max_length=500,blank=True)
     quantity = models.IntegerField(blank=True)
     price = models.IntegerField()

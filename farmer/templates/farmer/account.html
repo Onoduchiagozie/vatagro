@@ -64,10 +64,12 @@
         <ul class="nav nav-list" style="min-height: 600px;" id="candidate_nav">
             <li id="candidate_profile" > <a href="{% url 'dashboard' %} " class="first">Dashboard <i class="icon-angle-right"></i></a></li>
             <li id="candidate_additional"><a href="{% url 'profile' request.user.pk %}">my profile <i class="icon-angle-right"></i></a></li>
-            <li id="candidate_photo"><a href="{% url 'shippingaddress' %}">shipping address<i class="icon-angle-right"></i></a></li>
-            <li id="candidate_secondary"><a href="{% url 'storelocation' %}">store location<i class="icon-angle-right"></i></a></li>
-            <li id="candidate_olevel"><a href="{% url 'myproducts' %}"> my products <i class="icon-angle-right"></i></a></li>
+            <li id="candidate_photo"><a href="{% url 'shippinglist'  %}">shipping address<i class="icon-angle-right"></i></a></li>
             <li id="candidate_undergrad"><a href="{% url 'purchasedproducts' %}">purchased products <i class="icon-angle-right"></i></a></li>
+            <li id="candidate_olevel"><a href="{% url 'myproducts' %}"> my products <i class="icon-angle-right"></i></a></li>
+            <li id="candidate_secondary"><a href="{% url 'storelocation' %}">store location<i class="icon-angle-right"></i></a></li>
+
+
  
         </ul>
     </div>
