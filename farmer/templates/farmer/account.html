@@ -1,0 +1,106 @@
+{% load static %}
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <!-- <link rel="stylesheet" type="text/css" href="https://drive.google.com/uc?export=view&id=1LZRE1LF6ppckwx-Pr_3xoCk61YIEBMfq"> -->
+    <link rel="stylesheet" href=" {{file.css}} ">
+
+    <link rel="stylesheet" href="{% static 'styling.min.css' %}">
+</head>
+
+<body class="page">
+    <div id="navigation" class="wrapper">
+        <div class="navbar  navbar-static-top"  >
+            <!--Header & Branding region-->
+            <div class="header" style="background-color:#013220;" >
+                <div class="header-inner container">
+                    <div class="row-fluid">
+                        <div class="span7">
+                            <!--branding/logo-->
+                            <a class="brand" href="/" title="Home">
+                                <h1>
+
+                                    <img src=" {% static 'SYmbol.png' %}">
+
+                                    <!-- <img src="https://drive.google.com/uc?export=view&id=1nLUAAyCZxAw_qrYsIUGoJQmol5UQ7gt-"> -->
+                                </h1>
+                            </a>
+                            <div class="slogan hidden-tablet hidden-phone">Account &amp; Managment</div>
+                        </div>
+
+                        <!--header rightside-->
+                        <div class="span5">
+
+
+                            <!--social media icons-->
+                            <a href="">
+                            <div class="social-media pull-right hidden-phone">
+                                
+                                    <span>Valentine Onodu {{request.user}} [ <strong>da.valchi@gmail.com</strong> ]</span>
+                                    
+                            </div></a>
+                        
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div id="content" style="min-height: 1131px;">
+        <div class="container">
+            <div class="form-wrapper" style="max-width: 1125px; min-height: 500px;">
+
+<div class="row-fluid">
+
+    <div class="span3 sidebar" style="margin-left: 0;">
+    <div class="section-menu">
+        <ul class="nav nav-list" style="min-height: 600px;" id="candidate_nav">
+            <li id="candidate_profile" > <a href="{% url 'dashboard' %} " class="first">Dashboard <i class="icon-angle-right"></i></a></li>
+            <li id="candidate_additional"><a href="{% url 'profile' request.user.pk %}">my profile <i class="icon-angle-right"></i></a></li>
+            <li id="candidate_photo"><a href="{% url 'shippingaddress' %}">shipping address<i class="icon-angle-right"></i></a></li>
+            <li id="candidate_secondary"><a href="{% url 'storelocation' %}">store location<i class="icon-angle-right"></i></a></li>
+            <li id="candidate_olevel"><a href="{% url 'myproducts' %}"> my products <i class="icon-angle-right"></i></a></li>
+            <li id="candidate_undergrad"><a href="{% url 'purchasedproducts' %}">purchased products <i class="icon-angle-right"></i></a></li>
+ 
+        </ul>
+    </div>
+
+</div>  
+ 
+     <div class="span9 ng-scope" style="margin-left: 10px; padding-left: 20px; max-width: 850px;" ng-app="" id="ng-app">
+
+
+{% block content %}
+
+
+        <h3 class="title-divider" style="margin-bottom: 0;"><span>Personal Information</span> </h3>
+        <div class="lead" style="margin-bottom: 40px;">
+            Provide basic personal information
+        </div>
+
+
+
+
+
+
+
+    {% endblock %}
+    </div>
+
+</div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,87 @@
+{% extends 'account/index.html' %}
+
+
+{% block content %}
+<div class="container py-5">
+    <section class="row justify-content-around">
+        <div class="col-lg-20">
+            <div class="row">
+                <div class="col-lg-16">
+
+                    <div class="summary owl-carousel owl-theme col-lg-30"
+                         data-carousel="true"
+                         data-mouse-drag="true"
+                         data-dots="true"
+                         data-loop="false"
+                         data-responsive='{"0": {"margin": 0, "items": 1},"600":{"margin": 0, "items": 1},"1000":{"items":1, "margin": 0}}'>
+
+                            <!-- SPACE FOR PRODUCT TO HAVE MULTIPLE IMAGES -->
+
+                            <img src=" {{ product.prod_image.url }} " class="img-fluid" alt="" style="width:482px;height:416px">
+
+                    </div>
+                </div>
+                <div class="col-lg-14">
+
+                    <span>Merchant {{ product.farmername}} </span><br>
+
+                    <span class="starFadeN" id="sRate1"></span><span class="starFadeN" id="sRate2"></span><span class="starFadeN" id="sRate3"></span><span class="starFadeN" id="sRate4"></span><span class="starFadeN" id="sRate5"></span>
+
+                    <h1>{{product.product_name}} </h1>
+                    <p>Information</p>
+                    <p>
+                        <!-- get  selected store location object STATE CITY STORENAME -->
+                        The Product is located in {{ store.states }} state and the nearest location to the pickup
+                        is {{store.city}}, near {{ store.name }}. Kindly note that the merchant has attested the products are as displayed.
+
+
+                    </p>
+
+                    <div class="form-row py-2 ">
+                        <div class="col">
+                            <p name="" id="unit" class="form-control" style="font-size:large;font-weight:bolder">
+                                ₦{{ product.price }}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <p name="" id="unit" class="form-control" style="font-size:large;font-weight:bolder">
+                                Per 25kg Bag
+                            </p>
+                        </div>
+                    </div>
+                        <p> Available in Stock : <span style="color:green;font-weight:bolder"> {{product.stock}} </span></p>
+
+                        <a href="{% url 'checkout' %} "
+                           class="btn btn-block btn-primary my-4 mb-lg-0 text-uppercase text-center w-100 "
+                           style="color:white">
+                            Add To Cart
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        </a>
+
+                </div>
+
+            </div>
+            <div class="py-5">
+                <h3>Full Description</h3>
+                <p>
+                    {{ product.product_description }}
+                </p>
+
+            </div>
+
+            <section class="">
+            </section>
+        </div>
+        <div class="col-lg-6">
+            <h4 class="t-16 text-uppercase font-weight-bold text-color-vatagro-brown">Customers Review</h4>          
+
+            <hr />
+        </div>
+    </section>
+
+
+</div>
+
+
+
+{% endblock %}

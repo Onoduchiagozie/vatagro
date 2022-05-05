@@ -87,17 +87,25 @@ class Product(models.Model):
     product_name = models.TextField()
     product_catgeory = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     store_location = models.ForeignKey(
-    StoreLocation, on_delete=models.DO_NOTHING)
-    # measurment = models.charfield
-    product_description = models.CharField(max_length=500)
-    quantity = models.IntegerField()
+    StoreLocation, on_delete=models.DO_NOTHING,blank=True)
+    # per=(
+    #   ('25 Litres','25 Litres'),
+    #   ('50 Litres','50 Litres'),
+    #   ('10 Litres','10 Litres'),
+    #   ('25kg Bag','25kg Bag'),
+    #   ('50kg Bag','50kg Bag'),
+    #         ('Basket','Basket'),
+    # )
+    # measurment = models.CharField(max_length=20,choices=per)
+    product_description = models.CharField(max_length=500,blank=True)
+    quantity = models.IntegerField(blank=True)
     price = models.IntegerField()
-    intra_state_shipping_fee = models.CharField(max_length=20)
-    inter_state_shipping_fee = models.CharField(max_length=20)
+    intra_state_shipping_fee = models.CharField(max_length=20,blank=True)
+    inter_state_shipping_fee = models.CharField(max_length=20,blank=True)
 
     prod_image = models.ImageField(upload_to='photos/goods')
-    stock = models.IntegerField()
-    farmername = models.ForeignKey(Merchant, on_delete= models.DO_NOTHING)
+    stock = models.IntegerField(blank=True)
+    farmername = models.ForeignKey(Merchant, on_delete= models.DO_NOTHING,blank=True)
     is_active = models.BooleanField()
     date_time = models.DateTimeField(auto_now_add=True)
 

@@ -11,15 +11,24 @@ from goods.models import Category, StoreLocation
 from goods.models import Product
 from django.db.models import F
 
+
+
+def checkout(request):
+    return render(request,'account/checkout.html')
+
+
 def category(request,pk):
     cat=Category.objects.all()
     main_cat=Category.objects.filter(pk=pk)
     product_category=Product.objects.filter(product_catgeory=pk)
-
+    store=get_object_or_404(StoreLocation,pk=pk)
+    storelocat=StoreLocation.objects.all()
     context={
         "cat":cat,
         'main':main_cat,
-        'prod_cat':product_category
+        'prod_cat':product_category,
+        "state":store,
+        "store_state_list":storelocat
     }
     return render(request,'account/catgeory.html',context)
 

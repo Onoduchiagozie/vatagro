@@ -1,0 +1,146 @@
+{% extends 'account/index.html' %}
+
+{% block content %}
+
+ <div class="container py-5" style="background: #eeefff">
+    <div class="row justify-content-around">
+        <div class="col-lg-26"><h1 class="display-3 mb-4">Checkout</h1></div>
+        <div class="col-lg-12">
+            <div class="mb-4">
+                <h3 class="t-14 text-black-50">SHIPPING DETAILS</h3>
+
+                <p>Kindly Login or Register to complete your ordering process</p>
+                <a class="btn btn-primary" href="/Customer/Account/CheckoutSignIn">Sign In</a>
+
+                <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-success="paySuccess" data-ajax-failure="payFail" data-ajax-confirm="Your are being redirected to the payment website." action="/Paystack/MakePayment?total=83620.0000&amp;cartId=8bd9627d-7e4a-4d72-ad8b-61b5ba31ee33">
+                    <hr>
+
+
+
+
+
+
+                    <p style="color:red"><input id="chkRead" type="checkbox" name="chkRead">  Accept Disclaimer </p>
+                    <i style="color:red">
+                        Vatagro operates a safe and secured e-commerce platform and is in no way affiliated to the merchants and delivery of products. Every transaction in this marketplace is solely between the merchants and consumers.
+                    </i>
+
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NVAzMsJsYROi8ja4TMvrc7wP_Qk7BpyDLetYVdUD5JX_Zg6Lv2Auh8VW3Q21SRVMNdWXqhItaaTf3u6CahwfWoZuK3uMmBjHu7s27K1ejBGEks_e4p45d52saojdy8FO2wbMs1V0fsQkvZa_GHJcKw"></form>
+
+
+
+            </div>
+
+        </div>
+        <div class="col-lg-12">
+
+            <a class="text-right d-block mb-3" href="/Home"> Continue Shopping →</a>
+
+
+            <h3 class="t-14 text-black-50">YOUR ORDER</h3>
+            <hr>
+            <table class="table font-weight-bold table-borderless">
+
+                <tbody>
+
+                    <tr class="product border-bottom">
+                        <td colspan="20%" class="d-flex">
+                            <img src="/Vatimages/pinenut.jpg" alt="" style="width: 50px; height: 50px">
+
+                            <span class="mini-details px-2">
+                                <span>Pinenut</span>
+                                <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Seller Jojo</span>
+                            </span>
+                        </td>
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            <span class="border p-1 mb-1">6</span>
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Quantity</span>
+                        </td>
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            <span class="border p-1 mb-1">₦7,000</span>
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Price</span>
+                        </td>
+
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+
+                            <span class="border p-1 mb-1">₦0</span>
+
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Shipping</span>
+                        </td>
+
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            <span class="border p-1 mb-1">₦42,000</span>
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Sub-Total</span>
+                        </td>
+
+
+                        <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove btn-darken-4" href="/ShoppingCart/RemoveFromShoppingCart/kuC4qPXZxZQ%3D"><img src="/Vatimages/minus3.jpg" height="42" width="40" alt="minus"></a></td>
+                        <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove btn-darken-4" href="/ShoppingCart/AddOneToShoppingCart/kuC4qPXZxZQ%3D?quantity=6"><img src="/Vatimages/plus3.jpg" alt="plus" height="42" width="40"></a></td>
+
+                    </tr>
+                    <tr class="product border-bottom">
+                        <td colspan="20%" class="d-flex">
+                            <img src="/Vatimages/cassava.jpg" alt="" style="width: 50px; height: 50px">
+
+                            <span class="mini-details px-2">
+                                <span>Cassava</span>
+                                <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Seller Jojo</span>
+                            </span>
+                        </td>
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            <span class="border p-1 mb-1">4</span>
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Quantity</span>
+                        </td>
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            <span class="border p-1 mb-1">₦8,000</span>
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Price</span>
+                        </td>
+
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+
+                            <span class="border p-1 mb-1">₦0</span>
+
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Shipping</span>
+                        </td>
+
+                        <td colspan="20%" class="text-center" style="vertical-align: middle">
+                            <span class="border p-1 mb-1">₦32,000</span>
+                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Sub-Total</span>
+                        </td>
+
+
+                        <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove btn-darken-4" href="/ShoppingCart/RemoveFromShoppingCart/DXu9p4V~X3I%3D"><img src="/Vatimages/minus3.jpg" height="42" width="40" alt="minus"></a></td>
+                        <td class="text-center"><a class="glyphicon glyphicon-remove text-danger remove btn-darken-4" href="/ShoppingCart/AddOneToShoppingCart/DXu9p4V~X3I%3D?quantity=4"><img src="/Vatimages/plus3.jpg" alt="plus" height="42" width="40"></a></td>
+
+                    </tr>
+
+
+                </tbody>
+
+
+                <tfoot class="border-bottom">
+                    <tr>
+                        <td colspan="50%" class="border-0 py-0">Shipping</td>
+                        <td colspan="50%" class="text-right border-0 py-0">₦0</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="50%" class="border-0 py-0">VAT</td>
+                        <td colspan="50%" class="text-right border-0 py-0">₦9,620</td>
+                    </tr>
+
+                    <tr class="pb-3">
+                        <td colspan="50%" class="border-0 py-0">Total</td>
+                        <td colspan="50%" class="text-right border-0 py-0"> ₦83,620</td>
+                    </tr>
+                </tfoot>
+
+            </table>
+            <a style="background-color: darkred; color: wheat;text-align: center" class="btn btn-block" href="/ShoppingCart/ClearCart">Clear Shopping Cart</a>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -10,13 +10,21 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
+         <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+         crossorigin="anonymous"> -->
+
+
         <link rel="stylesheet" href=" {% static 'dist/site.css' %} ">
-        <link rel="stylesheet" href="{% static 'dist/all.min.css' %}">
-        <link rel="stylesheet" href="{% static 'dist/app.css' %}">
+
+
+        <!-- <link rel="stylesheet" href="{% static 'dist/all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'dist/app.css' %}">  -->
 
         <link rel="stylesheet" href="{% static 'font-awesome.min.css' %}">
+        
+        <link rel="stylesheet" href="{% static 'styling.css' %}">
 
-        <link rel="apple-touch-startup-image" href="{% static 'build/vatagro/256x256.png' %}">
 
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +43,6 @@
         <link rel="apple-touch-icon" sizes="196x196" href="{% static 'build/vatagro/196x196.png' %} ">
         <link rel="apple-touch-icon" sizes="256x256" href="{% static 'build/vatagro/256x256.png' %} ">
 
-        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="AgroServe activity feed" />
 
 
         <style>
@@ -43,7 +50,7 @@
             input[type=number]::-webkit-outer-spin-button {
                 -webkit-appearance: none;
                 margin: 0;
-            }
+            }           
         </style>
 
                                     </head>
@@ -54,6 +61,7 @@
         <div class="container">
             <a class="navbar-brand" href="/">
                 <span class="sr-only">AgroServe</span>
+                <!-- MAIN PAGE LOGO -->
                 <img src=" {% static 'assets/logo/VatAgro-wh.png' %}" class="cb__logo" style="width: 150px;padding: 10px;
     transform: translate(10px, -6px);" alt="AgroServe Logo">
             </a>
@@ -159,6 +167,7 @@
                     </div>
                     <div class="b-stage__overlay"></div>
                     <div style="" class="b-stage__image">
+                        <!-- MAIN PAGE PHOTO -->
                         <img src="{% static 'images/fold.jpg' %}" 
                         srcset=" {% static 'images/fold.jpg' %} 1920w,{% static 'images/mobile.jpg' %} 1060w" alt="" 
                         sizes="(max-width: 30em) 20em" 
@@ -214,9 +223,9 @@
                     <div class=''>
                         <a href="Home/Products/3E1txAafIUg%3d.html">
                             <div class="">
-                                <img src='{% static "images/top_sellers/angie.jpg" %}'
+                                <img src='{% static "" %}'
                                      height="768" width="1024"
-                                     alt="onion-Logo"
+                                     alt="Seller-Logo"
                                      class="img-fluid w-100" />
                                 <h4 class="mb-0">{{ x.first_name }} </h4>
                                 <span>2 products</span>
@@ -356,7 +365,6 @@
         </span>
         <script aysnc src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
         <script async src="{% static 'dist/site.bundle.js' %}"></script>
-        <script src="{%  static 'jquery.js' %}"></script>
 
     </body>
 </html>

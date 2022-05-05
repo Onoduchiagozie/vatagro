@@ -11,7 +11,7 @@
         <meta name="robots" content="noindex, follow">
         <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href=" {% static 'dist/site.css' %}">
+    <link rel="stylesheet" href=" {% static 'site.css' %}">
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,7 +35,7 @@
                      <!-- Remove this block on the server -->
      <style>
         .auth-bg {
-            background: url(dist/auth.jpg),hsl(0deg 0% 96%) no-repeat;
+            background: url('{% static "images/auth.jpg" %}'),hsl(0deg 0% 96%) no-repeat;
             background-size: cover;
         }
     </style> 
@@ -49,7 +49,7 @@
                 {% csrf_token %}
                 <div><a class="navbar-brand text-left" href="index.html">
                     <span class="sr-only">AgroServe</span>
-                    <img src=" {%    static 'assets/logo/VatAgro-2.png' %}" class=""
+                    <img src=" {%    static 'logo/VatAgro-2.png' %}" class=""
                          style="width: 150px; padding: 8px 5px; border-radius: 4px" alt="vatagro Logo">
                 </a>
                     <h3 class="font-weight-bold my-3">Register With Us</h3>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="col-lg-15 d-none d-lg-block p-0">
-            <img class="img-fluid" src="{% static 'assets/images/HET8841.jpg' %}" />
+            <img class="img-fluid" src="{% static 'images/HET8841.jpg' %}" />
         </div>
     </div>
 </div><script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
