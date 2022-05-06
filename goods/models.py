@@ -126,6 +126,7 @@ class Product(models.Model):
     product_catgeory = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     store_location = models.ForeignKey(
     StoreLocation, on_delete=models.DO_NOTHING,blank=True)
+
     per=(
       ('25 Litres','25 Litres'),
       ('50 Litres','50 Litres'),
@@ -135,6 +136,7 @@ class Product(models.Model):
             ('Basket','Basket'),
     )
     measurment = models.CharField(max_length=20,choices=per)
+
     product_description = models.CharField(max_length=500,blank=True)
     quantity = models.IntegerField(blank=True)
     price = models.IntegerField()

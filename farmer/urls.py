@@ -20,12 +20,17 @@ urlpatterns = [
         path('shippinglist',views.ShippingAddressListView.as_view(),name='shippinglist'),
 
 
+        path('myproducts',views.MyProductsListView.as_view(),name='myproducts'),
+        path('newproducts',views.MyProductsCreateView.as_view(),name='newproducts'),
+        path('<pk>/updateproducts',views.ProductsUpdateView.as_view(),name='updateproducts'),
+
+
+
 
 
         path('storelocation',views.storelocation,name='storelocation'),
 
 
-        path('myproducts',views.myproducts,name='myproducts'),
 
 
         path('purchasedproducts',views.purchasedproducts,name='purchasedproducts'),

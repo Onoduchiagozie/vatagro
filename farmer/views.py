@@ -1,17 +1,27 @@
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+from farmer.models import Cart, CartItem
 
-from goods.models import ShippingAddress
-from . models import MediaFiles
+from goods.models import Product, ShippingAddress
 from django.views.generic.edit import UpdateView,CreateView
 from django.views.generic import ListView
 from account.models import User
 
+
+
+
+
+
+
+
+
+
+
 # Create your views here.
 def account(request):
-    files=get_object_or_404(MediaFiles,pk=1)
+    files=get_object_or_404(pk=1)
     context={
-        'file':files
+        
     }
     return render(request,'farmer/account.html',context)
 
@@ -28,7 +38,9 @@ class UserUpdateView(UpdateView):
     template_name = 'farmer/profile.html'
 
 
-# LISTVIEW
+
+
+# SHIPPING_ADDRESS
 class ShippingAddressUpdateView(UpdateView):
     model=ShippingAddress
     fields = '__all__'
@@ -48,14 +60,34 @@ class ShippingAddressListView(ListView):
     template_name = 'farmer/listshippingaddress.html'
     context_object_name='object'
 
-    
+
+# MY_PRODUCTS
+class MyProductsListView(ListView):
+    model=Product
+    # fields = '__all__'
+    success_url = '/'
+    template_name = 'farmer/myproducts.html'
+    context_object_name='object'
+
+class MyProductsCreateView(CreateView):
+    model=Product
+    fields = '__all__'
+    success_url = '/'
+    template_name = 'farmer/newmyproducts.html'
+
+
+class ProductsUpdateView(UpdateView):
+    model=Product
+    fields = '__all__'
+    success_url = '/'
+    template_name = 'farmer/updateproducts.html'
+
+
 # FARMERONLY
 def storelocation(request):
     return render(request,'farmer/storelocation.html')
 
-# LIST VIEW OF EXITING THEN (CREATEVIEW)
-def myproducts(request):
-    return render(request,'farmer/myproducts.html')
+
 
 # LISTVIEW TABLE
 def purchasedproducts(request):

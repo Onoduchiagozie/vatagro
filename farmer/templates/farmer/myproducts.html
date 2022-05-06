@@ -1,14 +1,86 @@
 {% extends 'farmer/account.html' %}
-{% load crispy_forms_tags %}
+
 
 {% block content %}
-<h3 class="title-divider" style="margin-bottom: 0;"><span>My Products</span></h3>
+
+<h3 class="title-divider" style="margin-bottom: 0;"><span> My Products </span> </h3>
 <div class="lead" style="margin-bottom: 40px;">
-    <form method="post">{% csrf_token %}
-        <!-- {{ form|crispy }} -->
-        list view first then add new (new page)
-        <input type="submit" value="Update">
-    </form>
+      <table  class=" table table-striped table-hover  " >
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Catgeory
+                </th>
+                <th>
+                    Product
+                </th>
+                <th>Location</th>
+                <th>
+                Quantity
+                </th>
+                <th>
+                Measurement
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    Shipping Within State
+                </th>
+            
+                
+            </tr>
+        </thead>
+    
+        {% for x in object %}
+    
+        <tr {% if x.is_active %} style="color: green;" {% else %} style="color: red;" {% endif %} >
+            <td>
+                {{ x.product_catgeory }}
+            </td>
+            <td>
+                {{x.product_name}}
+            </td>
+            <td>
+                {{x.store_location}}
+            </td>
+            <td>
+                {{x.measurment}}
+            </td>
+            <td>
+                {{x.quantity}}
+            </td>
+            <td>
+                {{ x.price }}
+            </td>
+            <td>
+                {{x.intra_state_shipping_fee }}
+            </td>
+            <td>
+                <a href="{% url 'updateproducts' x.pk %} "> Edit ?</a>
+            </td>
+           
+        </tr>
+    
+    {% endfor %}
+    </table>
+
+    <button> <a href=" {% url 'newproducts' %} ">Add New Product </a></button>
 </div>
+
+
+
+
+
+
+
+
+ 
+</div>
+</div>
+
+
+
+
 
 {% endblock %}

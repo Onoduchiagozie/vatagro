@@ -26,11 +26,11 @@
                  data-mouse-drag="true"
                  data-nav="false"
                  data-responsive='{"0": {"margin": 0, "items": 1},"600":{"margin": 0, "items": 1},"1000":{"items":1, "margin": 0}}'>
-                <img alt="" class="img-fluid" src="{% static 'pepper.png' %}">
-                <img alt="" class="img-fluid" src="{% static './images/agroserve_products.jpg' %}">
-                <img alt="" class="img-fluid" src="{% static './images/agroserve_products.jpg' %}">
-                <img alt="" class="img-fluid" src="{% static './images/agroserve_products.jpg' %}">
-                <img alt="" class="img-fluid" src="{% static './images/agroserve_products.jpg' %}">
+                <img alt="" class="img-fluid" src="{% static 'rice.jpg' %}">
+                <img alt="" class="img-fluid" src="{% static 'rice.jpg' %}">
+                <img alt="" class="img-fluid" src="{% static 'rice.jpg' %}">
+                <img alt="" class="img-fluid" src="{% static 'rice.jpg' %}">
+                <img alt="" class="img-fluid" src="{% static 'rice.jpg' %}">
             </div>
         </div>
     </section>
@@ -65,20 +65,19 @@
                 <hr />
                 <div class="row justify-content-between">
                     <div class="col">
-                        <span>2 products found</span>
+                        <span>Found</span>
                     </div>
 
                     <div class="col text-right">
                         <a class="btn p-0" href="#">
                             <span class="sr-only">
-                                list
                             </span>
-                            <img alt="" src="images/list.html" style="width:16px">
+                            <img alt="" src="{% static 'hes.jpg' %} " style="width:16px">
                         </a><a class="btn p-0" href="#">
                             <span class="sr-only">
                                 grid
                             </span>
-                            <img alt="" src="images/grid.html" style="width:16px">
+                            <img alt="" src="{% static 'hes.jpg' %}" style="width:16px">
                         </a>
                     </div>
 
@@ -109,7 +108,7 @@
 
                                     <div class="col-lg-15">
                                         <h4 class="product_title t-12 my-1 font-weight-bold">Merchant <span>{{x.farmername}} </span></h4>
-                                        <h4 class="product_title t-14 my-1 text-vatagro-green font-weight-bold"> {{state.states}} State</h4>
+                                        <h4 class="product_title t-14 my-1 text-vatagro-green font-weight-bold"> {{x.store_location.states}} State</h4>
 
                                     </div>
 

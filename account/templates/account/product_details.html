@@ -31,8 +31,8 @@
                     <p>Information</p>
                     <p>
                         <!-- get  selected store location object STATE CITY STORENAME -->
-                        The Product is located in {{ store.states }} state and the nearest location to the pickup
-                        is {{store.city}}, near {{ store.name }}. Kindly note that the merchant has attested the products are as displayed.
+                        The Product is located in {{ product.store_location.states }} state and the nearest location to the pickup
+                        is {{ product.store_location.city }}, near {{ product.store_location.name }}. Kindly note that the merchant has attested the products are as displayed.
 
 
                     </p>
@@ -45,13 +45,13 @@
                         </div>
                         <div class="col">
                             <p name="" id="unit" class="form-control" style="font-size:large;font-weight:bolder">
-                                Per 25kg Bag
+                                Per {{ product.measurment }}
                             </p>
                         </div>
                     </div>
                         <p> Available in Stock : <span style="color:green;font-weight:bolder"> {{product.stock}} </span></p>
 
-                        <a href="{% url 'checkout' %} "
+                        <a href="{% url 'addcart' product.id %} "
                            class="btn btn-block btn-primary my-4 mb-lg-0 text-uppercase text-center w-100 "
                            style="color:white">
                             Add To Cart

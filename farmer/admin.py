@@ -1,6 +1,5 @@
 from django.contrib import admin
+from .models import Cart,CartItem
 
-# Register your models here.
-from .models import MediaFiles
-
-admin.site.register(MediaFiles)
+admin.site.register(CartItem)
+admin.site.register(Cart)

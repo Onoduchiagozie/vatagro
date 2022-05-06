@@ -1,14 +1,34 @@
-from distutils.command.upload import upload
 from django.db import models
+
+from goods.models import Product
 
 # Create your models here.
 
+class Cart(models.Model):
+    cart_id=models.CharField(max_length=100,blank=True)
+    date_added=models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        db_table='Cart'
+        ordering=['date_added']
 
-class MediaFiles(models.Model):
-    name=models.CharField(max_length=20)
-    image=models.ImageField(upload_to='img')
-    css=models.FileField(upload_to='files')
-    
     def __str__(self):
-        return self.name
+        return self.cart_id
+
+
+
+class CartItem(models.Model):
+    product=models.ForeignKey(Product,on_delete=models.DO_NOTHING)
+    cart=models.ForeignKey(Cart,on_delete=models.DO_NOTHING)
+    quantity=models.IntegerField()
+    is_active=models.BooleanField(default=True)
+
+    class Meta:
+        db_table='CartItem'
+
+    def sub_total(self):
+        return self.product.price * self.quantity
+
+
+    def __str__(self):
+        return self.product

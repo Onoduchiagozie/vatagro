@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.views  import LoginView
@@ -7,27 +8,98 @@ from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm #add this
 from django.contrib import messages
 from account.models import User
+from farmer.models import Cart, CartItem
 from goods.models import Category, StoreLocation
 from goods.models import Product
 from django.db.models import F
+from django.contrib.auth import get_user,get_user_model
+
+# NO MATTER WHAT YOU DO LOGIN OR NOT /ADD 1 MILL OR NOT / ITS STILL THE SAME CART 
+def _cart_id(request):
+    cart=request.session.session_key
+    if not cart:
+        cart=request.session.create()
+    return cart
+    
+def add_cart(request,product_id):
+    product= Product.objects.get(id=product_id)
+    try:
+        cart=Cart.objects.get(cart_id=_cart_id(request))
+    except Cart.DoesNotExist:
+        cart=Cart.objects.create(
+            cart_id=_cart_id(request)
+        )
+    cart.save()
+
+    try:
+        cart_item=CartItem.objects.get(product=product,cart=cart)
+        cart_item.quantity +=1
+        cart_item.save()
+
+    except CartItem.DoesNotExist:
+        cart_item=CartItem.objects.create(
+            product=product,
+            quantity=1,
+            cart=cart,
+        )
+        cart_item.save()
+   
+    return redirect('checkout')
 
 
 
-def checkout(request):
-    return render(request,'account/checkout.html')
+
+
+
+
+
+
+
+
+def checkout(request,total=0,quantity=0,cart_items=None):
+
+    cart=Cart.objects.get(cart_id=_cart_id(request))
+    cart_items=CartItem.objects.filter(cart=cart)
+    userid=request.user
+    current_user=get_object_or_404(User,pk=userid.id)
+    shipping_total=0
+    for cart_item in cart_items:
+        total+=(cart_item.product.price * cart_item.quantity)
+        quantity+= cart_item.quantity
+        if current_user.Active_Shipping_Address.state == cart_item.product.store_location.states:
+            shipping=cart_item.product.intra_state_shipping_fee
+        else:
+            shipping=cart_item.product.inter_state_shipping_fee
+        shipping_total+=int(shipping)
+
+    
+    tax=(2*total)/100
+    grand_total=total+tax+int(shipping_total)
+    user=request.user
+    active_shipping=get_object_or_404(User,pk=user.id)
+    context={
+        'quantity':quantity,
+        'cart_items':cart_items,
+        'address':active_shipping,
+        'tax':tax,
+        'grand_total':grand_total,
+        'shipping':shipping,
+        'shipping_total':shipping_total
+
+    }
+ 
+    return render(request,'account/checkout.html',context)
 
 
 def category(request,pk):
     cat=Category.objects.all()
-    main_cat=Category.objects.filter(pk=pk)
+    main_page_cat=Category.objects.filter(pk=pk)
     product_category=Product.objects.filter(product_catgeory=pk)
-    store=get_object_or_404(StoreLocation,pk=pk)
     storelocat=StoreLocation.objects.all()
     context={
         "cat":cat,
-        'main':main_cat,
+        'main':main_page_cat,
         'prod_cat':product_category,
-        "state":store,
         "store_state_list":storelocat
     }
     return render(request,'account/catgeory.html',context)
@@ -35,11 +107,9 @@ def category(request,pk):
 
 def product_details(request,pk):
     selected_product= get_object_or_404(Product,pk=pk) 
-    store=get_object_or_404(StoreLocation,pk=pk)
     context={
         "product":selected_product,
-        "store":store
-    }
+            }
     return render(request,'account/product_details.html',context)
 
 def home(request):
