@@ -13,6 +13,8 @@ class SignUpForm(UserCreationForm):
             # 'last_name', 
             # 'username', 
             'email', 
+            'phone',
+            'client_status',
             # 'password1', 
             ]
 
@@ -21,6 +23,11 @@ class SignUpForm(UserCreationForm):
     #     # self.fields['first_name'].widget.attrs['placeholder']='Enter First Name'
     #     # self.fields['last_name'].widget.attrs['placeholder']='Enter Last Name'
     #     # self.fields['username'].widget.attrs['placeholder']='User Name'
-    #     # self.fields['email'].widget.attrs['placeholder']='Enter Email'
-    #     # self.fields['password1'].widget.attrs['placeholder']='Repeat Password'
+    #     self.fields['email'].widget.attrs['placeholder']='Enter Email',
+    #     self.fields['phone'].widget.attrs['placeholder']='Phone Contact',
+    #     self.fields['client_status'].widget.attrs['value']='Registering As ?',
+
+
+
+        # self.fields['password1'].widget.attrs['placeholder']='Repeat Password'
 

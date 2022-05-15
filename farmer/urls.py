@@ -1,6 +1,3 @@
-
-
-
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
@@ -17,26 +14,22 @@ urlpatterns = [
 
         path('<pk>/UpdateShipping',views.ShippingAddressUpdateView.as_view(),name='shippingaddress'),
         path('createnewshipping',views.ShippingAddressCreateView.as_view(),name='newshippingaddress'),
-        path('shippinglist',views.ShippingAddressListView.as_view(),name='shippinglist'),
+        path('shippinglist',views.ShippingAddressListView,name='shippinglist'),
 
 
-        path('myproducts',views.MyProductsListView.as_view(),name='myproducts'),
+        path('purchasedproducts',views.MyPurchasedProducctsListView,name='purchasedproducts'),
+        path('<pk>/orderupdate',views.FarmerOrderProductsUpdateView.as_view(),name='orderupdate'),
+
+
+
+        path('storelist',views.StoreListView,name='storelist'),
+        path('storeupdate/<pk>',views.StoreUpdateView.as_view(),name='storeupdate'),
+        path('storecreate',views.StoreCreateView.as_view(),name='storecreate'),
+
+
+        path('myproducts',views.MyProductsListView,name='myproducts'),
         path('newproducts',views.MyProductsCreateView.as_view(),name='newproducts'),
         path('<pk>/updateproducts',views.ProductsUpdateView.as_view(),name='updateproducts'),
-
-
-
-
-
-        path('storelocation',views.storelocation,name='storelocation'),
-
-
-
-
-        path('purchasedproducts',views.purchasedproducts,name='purchasedproducts'),
-
-
-        path('new',views.new,name='new'),
 
 
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

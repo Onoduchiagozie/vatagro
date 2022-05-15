@@ -1,7 +1,10 @@
-
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
-from goods.models import ShippingAddress
+from django.contrib.auth import get_user_model
+
+
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -39,6 +42,8 @@ class UserManager(BaseUserManager):
 
 
 
+
+
 class User(AbstractBaseUser):
     first_name=models.CharField(max_length=50)
     last_name=models.CharField(max_length=50)
@@ -48,27 +53,29 @@ class User(AbstractBaseUser):
         unique=True,
     )
     phone=models.CharField(max_length=20)
-    Active_Shipping_Address=models.ForeignKey(ShippingAddress,on_delete=models.DO_NOTHING,
+    Active_Shipping_Address=models.ForeignKey('goods.ShippingAddress',on_delete=models.DO_NOTHING,
     blank=True,null=True
+    
 )
     staff = models.BooleanField(default=False) # a admin user; non super-user
     admin = models.BooleanField(default=False)
 
     STATUS=(
-        ('CUSTOMER','Buyer'),
-        ('FARMER','Seller')
+        ('Buyer','Buyer'),
+        ('Seller','Seller')
     )
     client_status=models.CharField(max_length=500,choices=STATUS)
     
 
-    USERNAME_FIELD='email'  
+    USERNAME_FIELD='email'
+
 
     def has_perm(self,perm,obj=None):
         return self.is_admin
 
 
     def __str__(self):
-        return self.email
+        return self.first_name
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
@@ -88,8 +95,5 @@ class User(AbstractBaseUser):
         return self.admin
 
 
-
     objects=UserManager()
 
-
-    

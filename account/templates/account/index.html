@@ -72,20 +72,15 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav">
                     {% if request.user.is_staff %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="">Products</a></li>
-                        {% endif %}
+                 
                     <li class="nav-item ">
-                        <a class="nav-link " href="" >
-                            Locations 
+                        <a class="nav-link " href="{% url 'account' %} " >
+                            Accounts 
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="">
-                            FAQ
-                        </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="">News</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'profile' request.user.id %} ">Profile</a></li>
+                        {% endif %}
 
                 </ul>
                 <ul class="navbar-nav ml-auto">
@@ -95,15 +90,16 @@
 
                         <a class="btn btn-outline-light mb-3 mb-lg-0 px-lg-4 ml-lg-4"
                            role="button" aria-haspopup="true" aria-expanded="false"         
-
-                           href="{% url 'myproducts' %} ">List your product</a>                    {% endif %}
+                           href="{% url 'myproducts' %} ">List your product</a>       
+                                         {% endif %}
 
                     </li>
                         {% if request.user.is_authenticated %}
                         <li class="nav-item" >
+                            
                             <a class="btn mb-0 btn-light text-black-50 mb-3 mb-lg-0 px-lg-4 ml-lg-4"
                                 role="button" aria-haspopup="true" aria-expanded="false"
-                                href="{% url 'logout' %}">Logout</a>
+                                href="{% url 'logout' %}"> Logout</a>
                          </li>
                          {% else %}
                     <li class="nav-item" >
@@ -118,11 +114,10 @@
 
                            {% endif %}
 
-                           <a href=" /carts/ " class="widget-header pl-3 ml-3">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-
-                        
-                            <span class="badge badge-pill badge-danger notify"> 0 </span>
+                           <a href=" {% url 'checkout' %} " class="widget-header pl-3 ml-3"  >
+                               
+                            <i class="fa fa-shopping-cart" aria-hidden="true" style="color: yellow;"></i>
+                            <span class="badge badge-pill badge-danger notify">  {{cart_count}} </span>
                         </a>
                     </li>
                 </ul>
@@ -227,7 +222,7 @@
                                      alt="Seller-Logo"
                                      class="img-fluid w-100" />
                                 <h4 class="mb-0">{{ x.first_name }} </h4>
-                                <span>2 products</span>
+                                <span>  </span>
                             </div> 
                         </a>
                     </div>
@@ -363,7 +358,10 @@
             </svg>
         </span>
         <script aysnc src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
-        <script async src="{% static 'site.bundle.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            <script async src="{% static 'site.bundle.js' %}"></script>
 
     </body>
 </html>

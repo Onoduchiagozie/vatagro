@@ -1,7 +1,10 @@
+
 from django.db import models
+from django.contrib.auth import get_user_model,get_user
+from django.shortcuts import get_object_or_404
 
 
-# noinspection PyCallingNonCallable
+
 class StoreLocation(models.Model):
     
     name = models.CharField(max_length=20)
@@ -44,19 +47,11 @@ class StoreLocation(models.Model):
 )         
     states=models.CharField(max_length=20,choices=states_list)
     city=models.CharField(max_length=20)
+    created_by=models.ForeignKey('account.User',on_delete=models.CASCADE,default=True)
     def __str__(self):
         return self.name
 
            
-
-class Merchant(models.Model):
-    name = models.CharField(max_length=20)
-    def __str__(self):
-      return self.name
-    
-
-
-
 class ShippingAddress(models.Model):
     states_list= (
                     ("Abia", " Abia"),                      
@@ -99,17 +94,11 @@ class ShippingAddress(models.Model):
     address = models.CharField(max_length=50)
     phone = models.CharField(max_length=20)
     is_active = models.BooleanField(default=True)
+    created_by=models.ForeignKey('account.User',on_delete=models.CASCADE,default=True)
+
 
     def __str__(self):
       return self.address
-
-# AFTER CART PURCHASE
-# class PurchasedProducts(models.Model):
-#     purchased_product_name=models.ForeignKey(Products,on_delete=models.DO_NOTHING)
-#     state_Location_bought=models.foreighnkey
-#     # tracking_no=
-#     quantity=
-
 
 
 class Category(models.Model):
@@ -137,16 +126,15 @@ class Product(models.Model):
     )
     measurment = models.CharField(max_length=20,choices=per)
 
-    product_description = models.CharField(max_length=500,blank=True)
-    quantity = models.IntegerField(blank=True)
-    price = models.IntegerField()
-    intra_state_shipping_fee = models.CharField(max_length=20,blank=True)
-    inter_state_shipping_fee = models.CharField(max_length=20,blank=True)
-
+    product_description = models.CharField(max_length=500,blank=True,null=True)
+    quantity = models.IntegerField(blank=True,null=True)
+    price = models.IntegerField(null=True)
+    intra_state_shipping_fee = models.CharField(max_length=20,blank=True,null=True)
+    inter_state_shipping_fee = models.CharField(max_length=20,null=True)
     prod_image = models.ImageField(upload_to='photos/goods')
-    stock = models.IntegerField(blank=True)
-    farmername = models.ForeignKey(Merchant, on_delete= models.DO_NOTHING,blank=True)
-    is_active = models.BooleanField()
+    stock = models.IntegerField(blank=True,null=True)
+    farmername = models.ForeignKey('account.User', on_delete= models.CASCADE,blank=True,null=True)
+    is_active = models.BooleanField(default=False,null=True)
     date_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

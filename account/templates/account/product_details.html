@@ -51,12 +51,25 @@
                     </div>
                         <p> Available in Stock : <span style="color:green;font-weight:bolder"> {{product.stock}} </span></p>
 
-                        <a href="{% url 'addcart' product.id %} "
+                        {% if incart %} 
+
+                        <a href="{% url 'checkout' %} "
                            class="btn btn-block btn-primary my-4 mb-lg-0 text-uppercase text-center w-100 "
                            style="color:white">
-                            Add To Cart
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                           Added (View Cart)  <i class="fa fa-eye" ></i>
+                           
                         </a>
+                        {% else %}
+                        <a href="{% url 'addcart' product.id %} "
+                        class="btn btn-block btn-primary my-4 mb-lg-0 text-uppercase text-center w-100 "
+                        style="color:white">
+                            Add To Cart
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                     </a>
+                     {% endif %}
+
+
+
 
                 </div>
 

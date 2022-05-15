@@ -2,11 +2,11 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h3 class="title-divider" style="margin-bottom: 0;"><span>new Products</span></h3>
+<h3 class="title-divider" style="margin-bottom: 0;"><span>New Products</span></h3>
 <div class="lead" style="margin-bottom: 40px;">
-    <form method="post">{% csrf_token %}
+    <form method="post" enctype="multipart/form-data" >{% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" value="Update">
+        <input type="submit" value="Create Product">
     </form>
 </div>
 

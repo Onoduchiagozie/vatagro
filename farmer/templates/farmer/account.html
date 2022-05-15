@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,11 @@
     <link rel="stylesheet" href=" {{file.css}} ">
 
     <link rel="stylesheet" href="{% static 'styling.min.css' %}">
+
+   
+    <!-- CSS only -->
+    {% block additionalcss %} {% endblock%}
+
 </head>
 
 <body class="page">
@@ -30,7 +36,7 @@
                                     <!-- <img src="https://drive.google.com/uc?export=view&id=1nLUAAyCZxAw_qrYsIUGoJQmol5UQ7gt-"> -->
                                 </h1>
                             </a>
-                            <div class="slogan hidden-tablet hidden-phone">Account &amp; Managment</div>
+                            <div class="slogan hidden-tablet hidden-phone" style="color: white;" >Account &amp; Managment</div>
                         </div>
 
                         <!--header rightside-->
@@ -41,7 +47,7 @@
                             <a href="">
                             <div class="social-media pull-right hidden-phone">
                                 
-                                    <span>Valentine Onodu {{request.user}} [ <strong>da.valchi@gmail.com</strong> ]</span>
+                                    <span style="color: white;" >Good Morning  <strong> {{request.user.first_name}}  {{request.user.last_name}}</strong></span>
                                     
                             </div></a>
                         
@@ -66,8 +72,10 @@
             <li id="candidate_additional"><a href="{% url 'profile' request.user.pk %}">my profile <i class="icon-angle-right"></i></a></li>
             <li id="candidate_photo"><a href="{% url 'shippinglist'  %}">shipping address<i class="icon-angle-right"></i></a></li>
             <li id="candidate_undergrad"><a href="{% url 'purchasedproducts' %}">purchased products <i class="icon-angle-right"></i></a></li>
+            {% if request.user.is_staff %}
             <li id="candidate_olevel"><a href="{% url 'myproducts' %}"> my products <i class="icon-angle-right"></i></a></li>
-            <li id="candidate_secondary"><a href="{% url 'storelocation' %}">store location<i class="icon-angle-right"></i></a></li>
+            <li id="candidate_secondary"><a href="{% url 'storelist' %}">store location<i class="icon-angle-right"></i></a></li>
+            {% endif %}
 
 
  
@@ -84,14 +92,26 @@
 
         <h3 class="title-divider" style="margin-bottom: 0;"><span>Personal Information</span> </h3>
         <div class="lead" style="margin-bottom: 40px;">
-            Provide basic personal information
+            Manage All Personal Account Information And Details
         </div>
 
 
 
+    {% if messages %}
+        {% for message in messages %}
+            <div class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    {% endif %}
 
 
 
+
+
+<div class="container" style="color: #013220;">
+<h2>Account Status: {{status}} </h2>
+</div>
 
     {% endblock %}
     </div>

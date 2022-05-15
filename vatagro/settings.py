@@ -32,16 +32,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'account',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-        'account',
+            
     'farmer',
    'crispy_forms',
-   'goods'
+   'goods',
+   'orders'
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -69,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'farmer.context_processor.counter',
             ],
         },
     },

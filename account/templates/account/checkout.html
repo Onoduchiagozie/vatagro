@@ -11,32 +11,34 @@
                 <!-- NOTE TO SELF although sa FK it already refrences the whole instance -->
                 {% if request.user.is_authenticated %}
 
-                {% if address.Active_Shipping_Address %}
-                {{address.Active_Shipping_Address}} <br>
-                {{address.Active_Shipping_Address.city}}, {{address.Active_Shipping_Address.state}} State <br>
-                {{address.Active_Shipping_Address.phone}}
-                {% else %}
-                <a href="{% url 'profile' %}"><p> You Need To Select A Shipping Address </p></a>
-                 {% endif %}
-                {% else %}
-                <p>Kindly Login or Register to complete your ordering process</p>
-                <a class="btn btn-primary" href="{% url 'login' %} ">Sign In</a>
+                        {% if address.Active_Shipping_Address %}
+                                            {{address.Active_Shipping_Address}} <br>
+                                            {{address.Active_Shipping_Address.city}}, {{address.Active_Shipping_Address.state}} State <br>
+                                            {{address.Active_Shipping_Address.phone}} <br>
+                                            <a href="{% url 'newshippingaddress' %}"><p> Add New Shipping Address ? </p></a>
+
+                                {% else %}
+                                <a href="{% url 'profile' %}"><p> You Need To Select A Shipping Address </p></a>
+                                {% endif %}
+                        {% else %}
+                        <p>Kindly Login or Register to complete your ordering process</p>
+                        <a class="btn btn-primary" href="{% url 'login' %} ">Sign In</a>
                 {% endif %}
 
-                <form method="post" data-ajax="true" data-ajax-method="post" data-ajax-success="paySuccess" data-ajax-failure="payFail" data-ajax-confirm="Your are being redirected to the payment website." action="/Paystack/MakePayment?total=83620.0000&amp;cartId=8bd9627d-7e4a-4d72-ad8b-61b5ba31ee33">
+                <form method="post" data-ajax="true" data-ajax-method="post" action="{% url 'createorder' %}" data-ajax-success="paySuccess" data-ajax-failure="payFail" data-ajax-confirm="Your are being redirected to the payment website." >
                     <hr>
-
-
-
-
-
-
-                    <p style="color:red"><input id="chkRead" type="checkbox" name="chkRead">  Accept Disclaimer </p>
+                    {% csrf_token %}
+                    <input class="btn btn-primary" id="orderbutn" href="" disabled="true" type="submit" value="place order" >
+                
+                    <p style="color:red"><input id="chkRead" type="checkbox" name="chkRead" onchange="document.getElementById('orderbutn').disabled=!this.checked;">  Accept Disclaimer </p>
                     <i style="color:red">
-                        Vatagro operates a safe and secured e-commerce platform and is in no way affiliated to the merchants and delivery of products. Every transaction in this marketplace is solely between the merchants and consumers.
+                        Vatagro operates a safe and secured e-commerce platform and is in no way affiliated to the merchants and delivery of products. Every transaction in this
+                         marketplace is solely between the merchants and consumers.
                     </i>
 
-                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NVAzMsJsYROi8ja4TMvrc7wP_Qk7BpyDLetYVdUD5JX_Zg6Lv2Auh8VW3Q21SRVMNdWXqhItaaTf3u6CahwfWoZuK3uMmBjHu7s27K1ejBGEks_e4p45d52saojdy8FO2wbMs1V0fsQkvZa_GHJcKw"></form>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NVAzMsJsYROi8ja4TMvrc7wP_Qk7BpyDLetYVdUD5JX_Zg6Lv2Auh8VW3Q21SRVMNdWXqhItaaTf3u6CahwfWoZuK3uMmBjHu7s27K1
+                ejBGEks_e4p45d52saojdy8FO2wbMs1V0fsQkvZa_GHJcKw">
+            </form>
 
 
 
@@ -44,10 +46,11 @@
 
         </div>
         <div class="col-lg-12">
-
+            {% if not cart_items %}
+            <h2  style="color: green;">Your Shopping Cart Is Empty </h2>
             <a class="text-right d-block mb-3" href="{% url 'home' %} "> Continue Shopping →</a>
 
-              
+              {% else %}
             <h3 class="t-14 text-black-50">YOUR ORDER</h3>
             <hr>
             <table class="table font-weight-bold table-borderless">
@@ -59,7 +62,7 @@
 
                             <span class="mini-details px-2">
                                 <span>{{cart_item.product.product_name}} </span>
-                                <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Seller{{cart_item.product.farmername}} </span>
+                                <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Seller {{cart_item.product.farmername}} </span>
                             </span>
                         </td>
                         <td colspan="20%" class="text-center" style="vertical-align: middle">
@@ -86,13 +89,35 @@
                         </td>
 
 
-                        <td class="text-center" style="height: auto;">
-                            <a class="" href="/ShoppingCart/RemoveFromShoppingCart/DXu9p4V~X3I%3D">
-                                <i class="fa fa-minus" aria-hidden="true"></i>
+                        <td class="text-center" >
+                            <a class="" href="{% url 'removecart' cart_item.product.pk %} " >
+                                <i class="fa fa-minus" aria-hidden="true" style="height: 20px; width: 20;" ></i>
                             </a>
                         </td>
+
+
+
+                        <td class="text-center" style="margin-left: auto;">
+                            <a class="" >
+                                
+                            </a>
+                        </td>
+                        <td class="text-center" style="margin-left: auto;">
+                            <a class="" >
+                                
+                            </a>
+                        </td>
+                        <td class="text-center" style="margin-left: auto;">
+                            <a class="" >
+                                
+                            </a>
+                        </td>
+
+
+
                         <td class="text-center">
-                                 <a href="{% url 'addcart' cart_item.product.pk %} "><i class="fa fa-plus" aria-hidden="true"></i></a>        
+                                 <a href="{% url 'addcart' cart_item.product.pk %} "><i class="fa fa-plus" aria-hidden="true"></i>
+                                </a>        
                             </td>
 
                     </tr>
@@ -120,7 +145,7 @@
 
             </table>
             <a style="background-color: darkred; color: wheat;text-align: center" class="btn btn-block" href="/ShoppingCart/ClearCart">Clear Shopping Cart</a>
-
+            {% endif %}
         </div>
 
     </div>
