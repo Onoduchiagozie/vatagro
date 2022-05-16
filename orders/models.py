@@ -1,5 +1,5 @@
 from django.db import models
-from django.shortcuts import get_object_or_404
+
 
 # Create your models here.
 
@@ -28,3 +28,22 @@ class OrderProducts(models.Model):
 
     def __str__(self):
         return self.tracking_no
+
+
+
+
+
+
+
+class ReviewRating(models.Model):
+    product=models.ForeignKey('goods.Product',on_delete=models.CASCADE)
+    user=models.ForeignKey('account.User',on_delete=models.CASCADE)
+    subject=models.CharField(max_length=100,blank=True)
+    review=models.TextField(max_length=500,blank=True)
+    rating=models.FloatField()
+    status=models.BooleanField(default=True)
+    created_date=models.DateTimeField(auto_now_add=True)
+    update_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.user)

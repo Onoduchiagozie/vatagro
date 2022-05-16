@@ -4,7 +4,7 @@
 {% block content %}
 <h3 class="title-divider" style="margin-bottom: 0;"><span>New Products</span></h3>
 <div class="lead" style="margin-bottom: 40px;">
-    <form method="post" enctype="multipart/form-data" >{% csrf_token %}
+    <form class="form-control" method="post" enctype="multipart/form-data" >{% csrf_token %}
         {{ form|crispy }}
         <input type="submit" value="Create Product">
     </form>

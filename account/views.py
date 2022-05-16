@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login,authenticate,logout
 from django.contrib.auth.views  import LoginView
-from account.forms import SignUpForm
+from account.forms import ReviewForm, SignUpForm
 from django.views.generic import TemplateView,ListView,CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm #add this
@@ -13,7 +13,7 @@ from goods.models import Product
 from django.db.models import F
 from django.contrib.auth import get_user,get_user_model
 import random
-from orders.models import OrderProducts
+from orders.models import OrderProducts, ReviewRating
 
 
 # CART FUNCTIONS
@@ -133,11 +133,36 @@ def category(request,pk):
 def product_details(request,pk):
     selected_product= get_object_or_404(Product,pk=pk)
     in_cart=CartItem.objects.filter(cart__cart_id=_cart_id(request),product=selected_product)
+    review=ReviewRating.objects.filter(product_id=selected_product.id,status=True)
     context={
         "product":selected_product,
-        "incart":in_cart
+        "incart":in_cart,
+        'review':review
             }
     return render(request,'account/product_details.html',context)
+
+def review_rating(request,product_id):
+    url =request.META.get('HTTP_REFERER')
+    if request.method== 'POST':
+        try:
+            reviews=ReviewRating.objects.get(user__id=request.user.id, product__id=product_id)
+            form=ReviewForm(request.POST,instance=reviews)
+            form.save()
+            messages.success(request,'Thank You Your Review Has Been Updated.',)
+            return redirect(url)
+            
+        except ReviewRating.DoesNotExist:
+            form=ReviewForm(request.POST)
+            if form.is_valid():
+                data=ReviewRating()
+                data.subject=form.cleaned_data['subject']
+                data.rating=form.cleaned_data['rating']
+                data.review=form.cleaned_data['review']
+                data.product_id=product_id
+                data.user_id=request.user.id
+                data.save()
+                messages.success=(request,'Thank You ,Your Review Has Been Submitted')
+                return redirect(url)
 
 
 # HOMEPAGE
@@ -150,18 +175,15 @@ def home(request):
     }
     return render(request,'account/index.html',context)
 
-
 # LOGOUT
 def logout_request(request):
     logout(request)
     return redirect('home')
 
-
 # LOGIN
 class MyLogin(LoginView):
     template_name='account/login.html'
     success_url = reverse_lazy('account')
-
 
 # REGISTRATION
 class SignUpView(CreateView):

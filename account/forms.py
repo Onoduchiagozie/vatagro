@@ -1,4 +1,7 @@
+from pyexpat import model
 from django.contrib.auth.forms import UserCreationForm
+
+from orders.models import ReviewRating
 from .models import User
 from django import forms
 
@@ -31,3 +34,8 @@ class SignUpForm(UserCreationForm):
 
         # self.fields['password1'].widget.attrs['placeholder']='Repeat Password'
 
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model=ReviewRating
+        fields=['subject','review','rating']
+        
