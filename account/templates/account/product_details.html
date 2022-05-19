@@ -66,16 +66,17 @@
 
                         {% if incart %} 
 
-                        <a href="{% url 'checkout' %} "
+                        <a href="{% url 'checkout' %} " 
                            class="btn btn-block btn-primary my-4 mb-lg-0 text-uppercase text-center w-100 "
                            style="color:white">
-                           Added (View Cart)  <i class="fa fa-eye" ></i>
-                           
+                           Added (View Cart)  <i class="fa fa-eye" ></i>   
                         </a>
+
                         {% else %}
-                        <a href="{% url 'addcart' product.id %} "
+
+                        <a href="{% url 'addcart' product.id %} " id="cart_mode"
                         class="btn btn-block btn-primary my-4 mb-lg-0 text-uppercase text-center w-100 "
-                        style="color:white">
+                        style="color:white" onclick="show()" >
                             Add To Cart
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                      </a>
@@ -172,6 +173,14 @@
 
 </div>
 
+<script>
+    function show() {
+        const button=document.getElementById('cart_mode')
+        button.innerHTML=' Added (View Cart)  <i class="fa fa-eye" ></i>  ' 
+                    
 
+        
+    }
+</script>
 
 {% endblock %}

@@ -9,6 +9,7 @@
         <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+        <script src="https://unpkg.com/htmx.org@1.6.0"></script>
 
          <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
@@ -120,7 +121,11 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{% url 'account' %} ">Account</a>
-                                <a class="dropdown-item" href="{% url 'checkout' %} ">Cart/Checkout</a>
+                                {% if cart_count and request.user.Active_Shipping_Address %} 
+                                <a class="dropdown-item" href="{% url 'checkout' %} ">Cart/Checkout</a> 
+                                {% else %}
+                                <a class="dropdown-item" href="/">Cart/Checkout</a>
+                                {% endif %}
                                 <a class="dropdown-item" href="{% url 'purchasedproducts' %} "> Bought Products </a>
                             </div>
     
@@ -375,7 +380,7 @@
                     </section>
 
                      <div class="">
-                    <a href='admin' class="btn bg-vatagro-brown text-white ">Portal Login</a>
+                    <a href="" class="btn bg-vatagro-brown text-white ">Portal Login</a>
                       </div>
                 </div>
                

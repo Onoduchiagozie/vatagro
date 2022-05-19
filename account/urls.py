@@ -6,6 +6,7 @@ urlpatterns = [
                     path('success/',views.success,name='success'),
                     path('cancel/',views.cancel,name='cancel'),
 
+path('cart_reload/',views.cart_reload,name='cart_reload' ),
 
                     path('config/',views.stripe_config,name='config'),
                     path('create-checkout-session/', views.create_checkout_session), # new

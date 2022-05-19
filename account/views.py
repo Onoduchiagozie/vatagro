@@ -1,7 +1,7 @@
 import random
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import  logout
 from django.contrib.auth.views import LoginView
@@ -51,7 +51,7 @@ def add_cart(request, product_id):
         )
         cart_item.save()
 
-    return redirect('product_details', pk=product_id)
+    return redirect('checkout')
 
 
 def remove_cart(request, product_id):
@@ -134,6 +134,17 @@ def stripe_config(request):
     if request.method == 'GET':
         stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
         return JsonResponse(stripe_config, safe=False)
+
+
+
+
+
+def cart_reload(request):
+    return HttpResponse('hryyryyryfhhchccncmcmcmmcc')
+
+
+
+
 
 
 # CART & CHECKOUT PAGE
@@ -272,6 +283,7 @@ def review_rating(request, product_id):
 
 # HOMEPAGE
 def home(request):
+
     prod_category = Category.objects.all()
     sellers = User.objects.filter(staff=True)
     all_product = Product.objects.all()
