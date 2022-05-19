@@ -1,4 +1,5 @@
 {% extends 'account/index.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -17,27 +18,24 @@
                                             {{address.Active_Shipping_Address.phone}} <br>
                                             <a href="{% url 'newshippingaddress' %}"><p> Add New Shipping Address ? </p></a>
 
-                                {% else %}
-                                <a href="{% url 'profile' %}"><p> You Need To Select A Shipping Address </p></a>
-                                {% endif %}
                         {% else %}
+                                <a href="{% url 'profile' request.user.id %}"><p> You Need To Select A Shipping Address </p></a>
+                        {% endif %}
+                {% else %}
                         <p>Kindly Login or Register to complete your ordering process</p>
                         <a class="btn btn-primary" href="{% url 'login' %} ">Sign In</a>
                 {% endif %}
+                <input class="btn btn-primary"  href="" disabled="true" type="submit" id="submitBtn" value="place order" >
 
-                <form method="post" data-ajax="true" data-ajax-method="post" action="{% url 'createorder' %}" data-ajax-success="paySuccess" data-ajax-failure="payFail" data-ajax-confirm="Your are being redirected to the payment website." >
+                <form method="post" data-ajax="true" data-ajax-method="post" action="" data-ajax-success="paySuccess" data-ajax-failure="payFail" data-ajax-confirm="Your are being redirected to the payment website." >
                     <hr>
                     {% csrf_token %}
-                    <input class="btn btn-primary" id="orderbutn" href="" disabled="true" type="submit" value="place order" >
-                
-                    <p style="color:red"><input id="chkRead" type="checkbox" name="chkRead" onchange="document.getElementById('orderbutn').disabled=!this.checked;">  Accept Disclaimer </p>
+                    <p style="color:red"><input id="chkRead" type="checkbox" name="chkRead" onchange="document.getElementById('submitBtn').disabled=!this.checked;">  Accept Disclaimer </p>
                     <i style="color:red">
                         Vatagro operates a safe and secured e-commerce platform and is in no way affiliated to the merchants and delivery of products. Every transaction in this
                          marketplace is solely between the merchants and consumers.
                     </i>
 
-                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NVAzMsJsYROi8ja4TMvrc7wP_Qk7BpyDLetYVdUD5JX_Zg6Lv2Auh8VW3Q21SRVMNdWXqhItaaTf3u6CahwfWoZuK3uMmBjHu7s27K1
-                ejBGEks_e4p45d52saojdy8FO2wbMs1V0fsQkvZa_GHJcKw">
             </form>
 
 
@@ -144,11 +142,15 @@
                 </tfoot>
 
             </table>
-            <a style="background-color: darkred; color: wheat;text-align: center" class="btn btn-block" href="/ShoppingCart/ClearCart">Clear Shopping Cart</a>
+            <a style="background-color: darkred; color: wheat;text-align: center" class="btn btn-block" href="{% url 'clearcart'%} ">Clear Shopping Cart</a>
             {% endif %}
         </div>
 
     </div>
 </div>
 
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script src="{% static 'main.js' %} "></script>
 {% endblock %}

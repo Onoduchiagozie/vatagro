@@ -44,7 +44,7 @@
 
 
                             <!--social media icons-->
-                            <a href="">
+                            <a href="{% url 'account' %} ">
                             <div class="social-media pull-right hidden-phone">
                                 
                                     <span style="color: white;" >Good Morning  <strong> {{request.user.first_name}}  {{request.user.last_name}}</strong></span>
@@ -95,23 +95,31 @@
             Manage All Personal Account Information And Details
         </div>
 
+{% if request.user.Active_Shipping_Address is None %}
+
+{{request.user.Active_Shipping_Address}}
+<p style="color: red; font-size: large;">You Currently Do Not Have An Active Shipping Address, Kindly <a href="newshippingaddress"> Create</a> Then Select In Your User Profile Section </p>
+{% endif %}
 
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="text-center alert alert-{{ message.tags }}">
-                {{ message|safe }}
-            </div>
-        {% endfor %}
-    {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="text-center alert alert-{{ message.tags }}">
+                    {{ message|safe }}
+                </div>
+            {% endfor %}
+        {% endif %}
 
 
 
+        <div class="container" style="color: #013220;">
+        <h2>Account Status: {{status}} </h2>
+        </div>
 
 
-<div class="container" style="color: #013220;">
-<h2>Account Status: {{status}} </h2>
-</div>
+
+        
+
 
     {% endblock %}
     </div>
@@ -120,7 +128,6 @@
             </div>
         </div>
     </div>
-
 
 </body>
 </html>

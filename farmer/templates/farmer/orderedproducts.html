@@ -58,7 +58,7 @@
             <td>
                 {{x.Transaction_date}}
             </td>
-            <td>
+            <td  {% if x.status == 'Delivered' %} style="color: green;" {% elif x.status == 'Awaiting Packaging' %} style="color: red;" {% elif x.status == 'Packaged' %} style="color: blue;" {% else %} style="color: black;" {% endif %}>
                 {{x.status}}
             </td>
         </tr>
@@ -124,7 +124,7 @@
                     {{x.Transaction_date}}
                 </td>
                 <td>
-                <a href="{% url 'orderupdate' x.pk %} ">  {{x.status}}</a>
+                <a href="{% url 'orderupdate' x.pk %} " >  {{x.status}}</a>
                 </td>
             </tr>
         

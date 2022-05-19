@@ -50,16 +50,18 @@
                     <h6 class="text-uppercase pt-4 font-weight-normal">Location</h6>
                     <nav class="nav flex-column">
                         {% for x in  store_state_list %}
-                                <a class="nav-link py-0 px-0 active" href="../ProductsByLocation/anRttfH2Kjs%3d.html">{{x.states}} </a>
+                                <a class="nav-link py-0 px-0 active" href="{% url 'category2' x.pk %} ">{{x.states}} </a>
                            {% endfor %}  
                     </nav>
                 </div>
             </div>
             <div class="col-lg-24 bg-white py-4">
                 <div class="row justify-content-between">
-                    {% for x in main %}
-                    <h2 class="col"> {{x.category_name}}  </h2>
-                    {% endfor %}
+                    {% if main.category_name %}
+                    <h2 class="col"> {{main.category_name}}  </h2>
+                    {% else %}
+                    <h2 class="col"> Products in {{state_name.states}} State  </h2>
+                    {% endif %}
                 </div>
 
                 <hr />

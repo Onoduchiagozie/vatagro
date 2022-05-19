@@ -26,12 +26,13 @@ SECRET_KEY = 'django-insecure-wt6m$^(ysoy!#hq8g4jjywj+g(2^6xcmzs4r1-o7l+s8(i8$%8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'stripe',
     'account',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -136,6 +137,12 @@ MEDIA_ROOT=BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL='home'
+LOGIN_REDIRECT_URL='account'
 LOGIN_URL='login'
 LOGOUT_REDIRECT_URL='home'
+
+
+
+
+STRIPE_SECRET_KEY='sk_test_51Kpv01ITTZjH3MU1ZgR33XD4coNkCuW7w8FIaZ7T5idVYEcnGLhJSEzWRcmVv7tY703qpHoCK45oEnBf7ZngWeFo0061chbEns'
+STRIPE_PUBLISHABLE_KEY='pk_test_51Kpv01ITTZjH3MU1FYSHYXdOI0j3H7Jk3opRJ6F82bptkBNjeTNBGz1cXzUgFyyoCCSU82jljYfkIOIBuYEfagVZ00XDZ6kUqR'

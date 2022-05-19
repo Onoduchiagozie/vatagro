@@ -73,16 +73,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav">
-                    {% if request.user.is_staff %}
-                 
-                    <li class="nav-item ">
-                        <a class="nav-link " href="{% url 'account' %} " >
-                            Accounts 
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'profile' request.user.id %} ">Profile</a></li>
-                        {% endif %}
 
                 </ul>
                 <ul class="navbar-nav ml-auto">
@@ -109,19 +99,34 @@
                            role="button" aria-haspopup="true" aria-expanded="false"
                            href=" {% url 'register' %}">Register</a>
                     </li>
+
+
+
                     <li class="nav-item" >
                         <a class="btn mb-0 btn-light text-black-50 mb-3 mb-lg-0 px-lg-4 ml-lg-4"
                            role="button" aria-haspopup="true" aria-expanded="false"
                            href="{% url 'login' %}">Sign In</a>
-
+ </li>
                            {% endif %}
 
-                           <a href=" {% url 'checkout' %} " class="widget-header pl-3 ml-3"  >
-                               
+                          
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle widget-header pl-3 ml-3 " href="{% url 'checkout' %} " id="navbarDropdown" 
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-shopping-cart" aria-hidden="true" style="color: yellow;"></i>
-                            <span class="badge badge-pill badge-danger notify">  {{cart_count}} </span>
-                        </a>
-                    </li>
+                                                        <span class="badge badge-pill badge-danger notify">  {{cart_count}} </span>
+
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'account' %} ">Account</a>
+                                <a class="dropdown-item" href="{% url 'checkout' %} ">Cart/Checkout</a>
+                                <a class="dropdown-item" href="{% url 'purchasedproducts' %} "> Bought Products </a>
+                            </div>
+    
+                            
+                        </a> 
+                       </li>
                 </ul>
             </div>
         </div>
@@ -129,48 +134,76 @@
 </header>
 
 {% block content %}
-    <div class="container-fluid p-0">
-                <div class="b-stage">
-                    <div class="b-stage__1 w-100">
-                        <div class="container flex-column justify-content-end d-flex pb-5 align-items-stretch" style="height: inherit">
-                            <h1 class="t-30 text-white mb-4 font-weight-bold">Find a product                         </h1>
-                            <form class="search form-row bg-green p-2 br-2 mb-lg-5">
-                                <div class="form-group col mb-2 mb-lg-0 px-1">
-                                    
-    <label for="product" class="sr-only">
-        Product
-    </label>
-<input type="" class="form-control bg-white border-0 " id="product" value="" placeholder="Type a product">
-                                </div>
-                                <div class="form-group col-15 col-lg-6 mb-2 mb-lg-0 px-1">
-                                    
-    <label for="location" class="sr-only">
-        Location
-    </label>
-<input type="" class="form-control bg-white border-0 " id="location" value="" placeholder="Location">
-                                </div>
-                                <div class="form-group col-15 col-lg-6 mb-2 mb-lg-0 px-1">
-                                    
-    <label for="price" class="sr-only">
-        Price Range
-    </label>
-<input type="" class="form-control bg-white border-0 " id="price" value="" placeholder="Price Range">
-                                </div>
-                                <button type="submit" class="btn btn-primary bg-green-800 mb-2 mb-lg-0 mx-2">Search
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="b-stage__overlay"></div>
-                    <div style="" class="b-stage__image">
-                        <!-- MAIN PAGE PHOTO -->
-                        <img src="{% static 'images/fold.jpg' %}" 
-                        srcset=" {% static 'images/fold.jpg' %} 1920w,{% static 'images/mobile.jpg' %} 1060w" alt="" 
-                        sizes="(max-width: 30em) 20em" 
-                        class="img-fluid w-100">
+
+    <section class="sub-header">
+        <div class="container-fluid p-0">
+            <div class="b-stage">
+                <div class="b-stage__1 w-100">
+                    <div class="container flex-column justify-content-end d-flex pb-5 align-items-stretch" style="height: inherit">
+                        <h1 class="t-30 text-white mb-4 font-weight-bold">Find a product</h1>
+                        
+        <form class="search form-row bg-green p-2 br-2 mb-lg-5" method="post" enctype="multipart/form-data" action=" {% url 'product_details2' %}">
+           {% csrf_token %}
+    
+            <div class="form-group col mb-2 mb-lg-0 px-1">
+                <label for="product" class='sr-only'>
+                    Product
+                </label>
+            <select  class="form-control bg-white border-0" data-val="true" data-val-required="The ProductId field is required." id="prod" name="prod">       
+                <option value="">Products</option>
+{% for x in product_list %}
+<option value="{{x.pk }}"> {{x.product_name}} </option>
+{% endfor %}
+     </select>
+            </div>
+    
+            <div class="form-group col-15 col-lg-6 mb-2 mb-lg-0 px-1">
+                <label for="State" class='sr-only'>
+                    State
+                </label>
+ <select class="form-control bg-white border-0" data-val="true" data-val-required="The StateId field is required." id="StateId" name="StateId"><option value="">Locations</option>
+    <!-- <option value="149">ABIA</option>
+    <option value="185">ZAMFARA</option> -->
+    </select>
+            </div>
+    
+            <div class="form-group col-15 col-lg-6 mb-2 mb-lg-0 px-1">
+                <label for="Price" class='sr-only'>
+                    Price
+                </label>
+                <input class="form-control bg-white border-0" data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" placeholder="Price" type="text" value="" />
+            </div>
+    
+            <button type="submit" class="btn btn-primary bg-green-800 mb-2 mb-lg-0 mx-2">
+                Search
+            </button>
+           
+        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8NVAzMsJsYROi8ja4TMvrc6blcRWrEmvefsxkqtdYF9V0zI3_zQHr2QRDR88W29UbtmhkU7G41C4GSDa44ujvao3BP
+        hS70ldHge4uJjnCNaHGHb8yAT5Nu9b5qToGZ5WerqUQxz-pT27qp5cGooGMVg" /></form>
+    
+                       
                     </div>
                 </div>
-    </div>
+                <div class="b-stage__overlay"></div>
+                <div style="" class="b-stage__image">
+                    <img src="{% static 'images/fold.jpg' %}" 
+                    srcset=" {% static 'images/fold.jpg' %} 1920w,{% static 'images/mobile.jpg' %} 1060w" alt="" 
+                    sizes="(max-width: 30em) 20em" 
+                    class="img-fluid w-100">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+
+
+
+
+
+
+
 
 
 
@@ -195,7 +228,6 @@
                                      alt="onion-Logo"
                                      class="img-fluid w-100" />
                                 <h4 class="mb-0">{{ x.category_name }} </h4>
-                                <span>2 products</span>
                             </div> 
                         </a>
                     </div>
@@ -217,12 +249,15 @@
                  {% for x in seller %}            
     
                     <div class=''>
-                        <a href="Home/Products/3E1txAafIUg%3d.html">
+                        <a href="/">
                             <div class="">
-                                <img src='{% static "" %}'
-                                     height="768" width="1024"
-                                     alt="Seller-Logo"
-                                     class="img-fluid w-100" />
+                         
+
+                                     <img src="https://dummyimage.com/150x150.gif?text={{ x.full_name }}" alt="" 
+                                      height="768" width="1024"
+                                      alt="Seller-Logo"
+                                      class="img-fluid w-100"
+                                     >
                                 <h4 class="mb-0">{{ x.first_name }} </h4>
                                 <span>  </span>
                             </div> 
@@ -233,54 +268,17 @@
         </div>
     </section>
     
-
-
-
-
-
-
-<!-- 
-<div class="container py-4 mt-1">
-    <h3 class="section-h t-20 font-weight-bold">Top Sellers</h3>
-<div class="row">
-    <div class="summary owl-carousel owl-theme col-lg-30"
-         data-carousel="true"
-         data-mouse-drag="true"
-         data-dots="true"
-         data-responsive='{"0": {"margin": 20, "items": 2},"600":{"margin": 20, "items": 3},"1000":{"items":5, "margin": 30}}'>
-             {% for x in seller %}
-
-                    <div class=''>
-                <a href="">
-
-    <div class="">
-        <img
-                src='' 
-                alt="dude-Logo"
-                class="img-fluid w-100"
-        />
-        <h4 class="mb-0">{{ x.first_name }}</h4>
-        <span>3,000 sold</span>
-    </div>
-</a>
-            </div>  
-                 {% endfor %}
-
-            </div>
-</div>
-</div> -->
-
-
-
 <div class="container py-4 mt-1 mb-5">
     <h3 class="section-h t-20 font-weight-bold">Popular Locations</h3>
+    
+
 <div class="row justify-content-center">
             <div class='col-lg-10 col-md-10 col-30'>
             <a href="">
     <div class="location position-relative text-white bg-green-800 br-2 mb-3 overflow-hidden">
         <h4 class="position-absolute t-36 text-white font-weight-bold" style="bottom: 20px;left: 20px;z-index: 8">Plateau</h4>
         <img
-                src=' {% static "images/by_location/plateau.jpg" %}'
+                src='{% static "images/by_location/plateau.jpg" %}'
                 alt="plateau-Logo"
                 class="img-fluid w-100"
                 style="opacity: 0.7"
@@ -289,10 +287,41 @@
 </a>
 
         </div>
-     
+            <div class='col-lg-10 col-md-10 col-30'>
+            <a href="">
+    <div class="location position-relative text-white bg-green-800 br-2 mb-3 overflow-hidden">
+        <h4 class="position-absolute t-36 text-white font-weight-bold" style="bottom: 20px;left: 20px;z-index: 8">Ogun</h4>
+        <img
+                src='{% static "images/by_location/ogun.jpg" %}'
+                alt="ogun-Logo"
+                class="img-fluid w-100"
+                style="opacity: 0.7"
+        />
+    </div>
+</a>
 
+        </div>
+            <div class='col-lg-10 col-md-10 col-30'>
+            <a href="">
+    <div class="location position-relative text-white bg-green-800 br-2 mb-3 overflow-hidden">
+        <h4 class="position-absolute t-36 text-white font-weight-bold" style="bottom: 20px;left: 20px;z-index: 8">Zaria</h4>
+        <img
+                src='{% static "images/by_location/zaria.jpg" %}'
+                alt="zaria-Logo"
+                class="img-fluid w-100"
+                style="opacity: 0.7"
+        />
+    </div>
+</a>
+
+        </div>
     </div>
 </div>
+
+
+
+
+
 <section class="py-5 bg-green-700 text-white">
     <div class="container">
         <div class="section-header mb-4">
@@ -318,7 +347,7 @@
         <div class="container">
             <div class="d-lg-flex justify-content-center justify-content-lg-between w-100">
                 <p class="t-24 mb-lg-0 text-color-vatagro-brown">List your products on Vatagro and reach thousands of buyers</p>
-                    <a href="register.html" class="btn btn-primary mb-0">Get Started</a>
+                    <a href="{% url 'register' %}" class="btn btn-primary mb-0">Get Started</a>
             </div>
         </div>
     </nav>
@@ -346,7 +375,7 @@
                     </section>
 
                      <div class="">
-                    <a href='127.0.0.1:8000/admin' class="btn bg-vatagro-brown text-white ">Portal Login</a>
+                    <a href='admin' class="btn bg-vatagro-brown text-white ">Portal Login</a>
                       </div>
                 </div>
                
@@ -358,12 +387,7 @@
             <svg width="40" height="37" viewBox="0 0 40 37" fill="none" xmlns="http://www.w3.org/2000/svg" class="img-fluid">
                 <path d="M20 0.999999L39 15.6512M20 0.999999L0.999999 15.6512M20 0.999999L20 37" stroke="#FDFDFD"/>
             </svg>
-        </span>
+        </span>            <script async src="{% static 'site.bundle.js' %}"></script>
         <script aysnc src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-            <script async src="{% static 'site.bundle.js' %}"></script>
-
     </body>
 </html>

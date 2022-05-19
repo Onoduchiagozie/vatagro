@@ -2,6 +2,7 @@
 from datetime import datetime, timedelta, timezone
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
+from account.views import success
 from farmer.forms import ProductForm, UserUpdateForm
 from farmer.models import Cart, CartItem
 from django.contrib.messages.views import SuccessMessageMixin
@@ -10,11 +11,11 @@ from django.views.generic.edit import UpdateView, CreateView
 from django.views.generic import ListView
 from account.models import User
 from orders.models import OrderProducts
-
-
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # ACCOUNT LANDING PAGE
+@login_required
 def account(request):
     account_status=''
     if request.user.is_staff and request.user.client_status == 'Seller':
@@ -28,6 +29,7 @@ def account(request):
     context = {
         'status':account_status
     }
+
     return render(request, 'farmer/account.html', context)
 
 def dashboard(request):
@@ -35,7 +37,6 @@ def dashboard(request):
     total_year = 0
     total_month = 0
     total_week = 0
-
     year = OrderProducts.objects.filter(
         user=request.user, Transaction_date__gte=datetime.now(timezone.utc)-timedelta(days=365))
     day = OrderProducts.objects.filter(
@@ -93,8 +94,9 @@ def dashboard(request):
 
     return render(request, 'farmer/dashboard.html', context)
 
-# UPDATE USER DETAILS 
-class UserUpdateView(UpdateView):
+# UPDATE USER DETAILS
+
+class UserUpdateView(LoginRequiredMixin,UpdateView):
     model = User
     form_class=UserUpdateForm
     success_url = reverse_lazy('account')
@@ -105,7 +107,7 @@ class UserUpdateView(UpdateView):
         return myform
 
 # UPDATE SHIPPING_ADDRESS 
-class ShippingAddressUpdateView(UpdateView):
+class ShippingAddressUpdateView(SuccessMessageMixin,UpdateView):
     model = ShippingAddress
     fields = ['state','city','address','phone','is_active']
     success_url = reverse_lazy('account')
@@ -113,7 +115,7 @@ class ShippingAddressUpdateView(UpdateView):
     template_name = 'farmer/shippingaddress.html'
 
 # CREATE SHIPPING ADDRESS 
-class ShippingAddressCreateView(CreateView):
+class ShippingAddressCreateView(SuccessMessageMixin,CreateView):
     model = ShippingAddress
     fields = ['state','city','address','phone','is_active']
     success_url = reverse_lazy('account')
@@ -132,6 +134,7 @@ def ShippingAddressListView(request):
     return render(request,'farmer/listshippingaddress.html',context)
 
 # LIST MY_PRODUCTS
+@login_required
 def MyProductsListView(request):
     product=Product.objects.filter(farmername=request.user.id)
     context={
@@ -156,7 +159,7 @@ class MyProductsCreateView(SuccessMessageMixin,CreateView):
         return myform
 
 # UPDATE PRODUCT DETAILS
-class ProductsUpdateView(UpdateView):
+class ProductsUpdateView(SuccessMessageMixin,UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('account')
@@ -168,6 +171,7 @@ class ProductsUpdateView(UpdateView):
         return super().form_valid(form)
 
 # LIST OF MY BOUGHT PRODUCTS & PRODUCTS BOUGHT FROM ME (as per dangote wey i be)
+
 def MyPurchasedProducctsListView(request):
     products = OrderProducts.objects.filter(user=request.user)
     customer_bought_from_me = OrderProducts.objects.filter(sold_by=request.user).all().exclude(status='Delivered')
@@ -178,7 +182,7 @@ def MyPurchasedProducctsListView(request):
     return render(request, 'farmer/orderedproducts.html', context)
 
 # UPDATE FARMER PRODUCT DELIVERY STATUS 
-class FarmerOrderProductsUpdateView(UpdateView):
+class FarmerOrderProductsUpdateView(SuccessMessageMixin,UpdateView):
     model = OrderProducts
     fields = ['status', ]
     success_url = reverse_lazy('account')
@@ -189,7 +193,7 @@ class FarmerOrderProductsUpdateView(UpdateView):
 class StoreCreateView(CreateView):
     model = StoreLocation
     fields = ['name','states','city']
-    success_url = reverse_lazy('account')
+    success_url = reverse_lazy('storelist')
     template_name = 'farmer/createnew.html'
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -199,7 +203,7 @@ class StoreCreateView(CreateView):
 class StoreUpdateView(UpdateView):
     model = StoreLocation
     fields = ['name','states','city']
-    success_url = reverse_lazy('account')
+    success_url = reverse_lazy('storelist')
     template_name = 'farmer/storeupdate.html'
     def form_valid(self, form):
         form.instance.created_by = self.request.user
