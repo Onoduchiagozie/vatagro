@@ -74,7 +74,7 @@
 
                         {% else %}
 
-                        <a href="{% url 'addcart' product.id %} " id="cart_mode"
+                        <a href="{% url 'addcart2' product.id %} " id="cart_mode"
                         class="btn btn-block btn-primary my-4 mb-lg-0 text-uppercase text-center w-100 "
                         style="color:white" onclick="show()" >
                             Add To Cart
@@ -176,7 +176,7 @@
 <script>
     function show() {
         const button=document.getElementById('cart_mode')
-        button.innerHTML=' Added (View Cart)  <i class="fa fa-eye" ></i>  ' 
+        button.innerHTML=' Added (View Cart items)  <i class="fa fa-eye" ></i>  ' 
                     
 
         

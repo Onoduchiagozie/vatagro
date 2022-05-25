@@ -17,6 +17,8 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from orders.models import OrderProducts, ReviewRating
 import stripe
+from django.conf import settings
+from django.core.mail import send_mail
 
 # CART FUNCTIONS
 
@@ -52,6 +54,34 @@ def add_cart(request, product_id):
         cart_item.save()
 
     return redirect('checkout')
+
+
+
+def add_cart2(request, product_id):
+    product = Product.objects.get(id=product_id)
+    try:
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+    except Cart.DoesNotExist:
+        cart = Cart.objects.create(
+            cart_id=_cart_id(request)
+        )
+    cart.save()
+
+    try:
+        cart_item = CartItem.objects.get(product=product, cart=cart)
+        cart_item.quantity += 1
+        cart_item.save()
+
+    except CartItem.DoesNotExist:
+        cart_item = CartItem.objects.create(
+            product=product,
+            quantity=1,
+            cart=cart,
+        )
+        cart_item.save()
+
+    return redirect('product_details',pk=product_id)
+
 
 
 def remove_cart(request, product_id):
@@ -91,6 +121,10 @@ def success(request, cart_items=None):
                               sold_by=x.product.farmername
                               )
         today.save()
+ 
+
+
+    
     cart_items.delete()
     return render(request, 'account/success.html')
 
@@ -134,14 +168,6 @@ def stripe_config(request):
     if request.method == 'GET':
         stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
         return JsonResponse(stripe_config, safe=False)
-
-
-
-
-
-def cart_reload(request):
-    return HttpResponse('hryyryyryfhhchccncmcmcmmcc')
-
 
 
 
@@ -239,7 +265,7 @@ def product_details(request, pk):
 
 
 @login_required
-def product_details2(request):
+def search_product_details(request):
     id = request.POST.get('prod')
     selected_product = get_object_or_404(Product, pk=id)
     in_cart = CartItem.objects.filter(
