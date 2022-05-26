@@ -69,7 +69,7 @@
                         </td>
                         <td colspan="20%" class="text-center" style="vertical-align: middle">
                             <span class="border p-1 mb-1">₦ {{cart_item.product.price}} </span>
-                            <span class="d-block t-12 text-black-50 text-uppercase font-weight-normal">Price</span>
+                            <span class="d-block t-12 text-black-50 text-uppercase afont-weight-normal">Price</span>
                         </td>
 
                         <td colspan="20%" class="text-center" style="vertical-align: middle">
@@ -95,27 +95,14 @@
 
 
 
-                        <td class="text-center" style="margin-left: auto;">
-                            <a class="" >
-                                
-                            </a>
-                        </td>
-                        <td class="text-center" style="margin-left: auto;">
-                            <a class="" >
-                                
-                            </a>
-                        </td>
-                        <td class="text-center" style="margin-left: auto;">
-                            <a class="" >
-                                
-                            </a>
-                        </td>
-
-
-
-                        <td class="text-center">
-                                 <a href="{% url 'addcart' cart_item.product.pk %} "><i class="fa fa-plus" aria-hidden="true"></i>
-                                </a>        
+                         <td class="text-center">
+                            {% if cart_item.quantity > cart_item.product.stock %} <p style="font-size: x-small;" > Available Stock Limit Exceeded</p>
+                                 <a href="" >
+                                </a> 
+                                {% else %}
+                                <a href="{% url 'addcart' cart_item.product.pk %} "><i class="fa fa-plus" aria-hidden="true"></i>
+                                </a> 
+                                {% endif %}       
                             </td>
 
                     </tr>
