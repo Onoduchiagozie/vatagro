@@ -47,7 +47,7 @@
                             <a href="{% url 'account' %} ">
                             <div class="social-media pull-right hidden-phone">
                                 
-                                    <span style="color: white;" >Good Morning  <strong> {{request.user.first_name}}  {{request.user.last_name}}</strong></span>
+                                    <span style="color: white;" >{{ greet }}  <strong> {{request.user.first_name}}  {{request.user.last_name}}</strong></span>
                                     
                             </div></a>
                         

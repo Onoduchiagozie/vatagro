@@ -10,6 +10,7 @@ from goods.models import Product, ShippingAddress, StoreLocation
 from django.views.generic.edit import UpdateView, CreateView
 from django.views.generic import ListView
 from account.models import User
+import datetime
 from orders.models import OrderProducts
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,6 +18,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # ACCOUNT LANDING PAGE
 @login_required
 def account(request):
+    hour = datetime.datetime.now().hour
+    greeting= ''
+    if hour < 12:
+        greeting = "Good morning"
+    elif hour < 18:
+        greeting = "Good afternoon"
+    else:
+        greeting = "Good Evening"
+
     account_status=''
     if request.user.is_staff and request.user.client_status == 'Seller':
         account_status='Merchant'
@@ -27,7 +37,8 @@ def account(request):
     else:
         account_status='Customer'
     context = {
-        'status':account_status
+        'status':account_status,
+        'greet':greeting
     }
 
     return render(request, 'farmer/account.html', context)

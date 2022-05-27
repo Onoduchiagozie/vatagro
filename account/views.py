@@ -121,6 +121,7 @@ def success(request, cart_items=None):
                               sold_by=x.product.farmername
                               )
         today.save()
+        
  
 
 
